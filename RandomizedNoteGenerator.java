@@ -2,7 +2,6 @@ public class RandomizedNoteGenerator {
 	public RandomizedNoteGenerator(NoteRangeRestrictor nrr, long randomSeed) {
 		restrictor = nrr;
 		randGen = new java.util.Random(randomSeed);
-		this.maxIntGenerated = maxIntGenerated;
 	}
 
 	protected int getNextInt(int maxPlusOne) {
@@ -11,5 +10,4 @@ public class RandomizedNoteGenerator {
 
 	protected NoteRangeRestrictor restrictor;
 	private java.util.Random randGen;
-	private int maxIntGenerated;
 }

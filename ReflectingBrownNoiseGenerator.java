@@ -34,7 +34,7 @@ public class ReflectingBrownNoiseGenerator extends BrownNoiseGenerator {
 	}	
 
 
-
+/*
         public static void main(String args[]) throws Exception {
                 NoteGenerator noteGen = new ReflectingBrownNoiseGenerator(
                         new NoteRangeRestrictor(35, 85, 2, 64),
@@ -52,5 +52,5 @@ public class ReflectingBrownNoiseGenerator extends BrownNoiseGenerator {
                 seqer.stop();
                 System.exit(0);
         }
-
+*/
 }

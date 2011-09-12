@@ -38,7 +38,7 @@ class MultiplicativeNoteGenerator extends DiceRollNoteGenerator {
 		return Converter.consecutiveIntToNoteLength( calculateReturnValue(lengthDiceValue) + lowestConsecutiveLength );
 	}
 
-	private int calculateReturnValue(java.util.Vector pizza) {
+	private int calculateReturnValue(java.util.Vector<Integer> pizza) {
 		int returnValue = 0;
 		for (int i = 0; i < pizza.size(); i++) {
 			if ( ( (Integer) pizza.elementAt(i) ).intValue() == 1) {
@@ -56,6 +56,7 @@ class MultiplicativeNoteGenerator extends DiceRollNoteGenerator {
 	private int lowestPitch;
 	private int lowestConsecutiveLength;
 
+	/*
         public static void main(String args[]) throws Exception {
                 NoteGenerator noteGen = new MultiplicativeNoteGenerator(
                         new NoteRangeRestrictor(32, 95, 1, 128),
@@ -71,5 +72,5 @@ class MultiplicativeNoteGenerator extends DiceRollNoteGenerator {
                 seqer.stop();
                 System.exit(0);
         }
-
+*/
 }

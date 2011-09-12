@@ -1,52 +1,53 @@
 import java.util.Vector;
+import java.util.List;
 
 public abstract class DiceRollNoteGenerator implements NoteGenerator {
 	public DiceRollNoteGenerator(int numPitchDice, int numDiceSides, int numLengthDice, int numLengthSides, long randomSeed) {
 		createDice(numPitchDice, numLengthDice);
 
 		for (int i = 0; i < numPitchDice; i++) {
-			pitchDiceMax.setElementAt(new Integer(numDiceSides), i);
-			pitchDiceRollCheck.setElementAt(new Integer(1), i);
+			pitchDiceMax.set(i, numDiceSides);
+			pitchDiceRollCheck.set(i, 1);
 		}
 		for (int i = 0; i < numLengthDice; i++) {
-			lengthDiceMax.setElementAt(new Integer(numLengthSides), i);
-			lengthDiceRollCheck.setElementAt(new Integer(1), i);
+			lengthDiceMax.set(i, numLengthSides);
+			lengthDiceRollCheck.set(i, 1);
 		}
 
 		randGen = new java.util.Random(randomSeed);
 	}
 
-	public DiceRollNoteGenerator(Vector numSidesPerPitchDice, Vector numSidesPerLengthDice, long randomSeed) {
+	public DiceRollNoteGenerator(List<? extends Integer> numSidesPerPitchDice, List<? extends Integer> numSidesPerLengthDice, long randomSeed) {
 		int numPitchDice = numSidesPerPitchDice.size();
 		int numLengthDice = numSidesPerLengthDice.size();
 		createDice(numPitchDice, numLengthDice);
 
 		for (int i = 0; i < numPitchDice; i++) {
-			pitchDiceMax.setElementAt(new Integer( ((Integer) numSidesPerPitchDice.elementAt(i)).intValue()), i);
-			pitchDiceRollCheck.setElementAt(new Integer(1), i);
+			pitchDiceMax.set(i, numSidesPerPitchDice.get(i));
+			pitchDiceRollCheck.set(i, 1);
 		}
 		for (int i = 0; i < numLengthDice; i++) {
-			lengthDiceMax.setElementAt(new Integer( ((Integer) numSidesPerLengthDice.elementAt(i)).intValue()), i);
-			lengthDiceRollCheck.setElementAt(new Integer(1), i);
+			lengthDiceMax.set(i, numSidesPerLengthDice.get(i));
+			lengthDiceRollCheck.set(i, 1);
 		}
 
 		randGen = new java.util.Random(randomSeed);
 	}
 
 	private void createDice(int numPitchDice, int numLengthDice) {
-                pitchDiceValue = new Vector(numPitchDice);
-                pitchDiceMax = new Vector(numPitchDice);
-                pitchDiceRollCheck = new Vector(numPitchDice);
-		pitchDiceValue.setSize(numPitchDice);
-		pitchDiceMax.setSize(numPitchDice);
-		pitchDiceRollCheck.setSize(numPitchDice);
+        pitchDiceValue = new Vector<Integer>(numPitchDice);
+        pitchDiceMax = new Vector<Integer>(numPitchDice);
+        pitchDiceRollCheck = new Vector<Integer>(numPitchDice);
+        pitchDiceValue.setSize(numPitchDice);
+        pitchDiceMax.setSize(numPitchDice);
+        pitchDiceRollCheck.setSize(numPitchDice);
 
-                lengthDiceValue = new Vector(numLengthDice);
-                lengthDiceMax = new Vector(numLengthDice);
-                lengthDiceRollCheck = new Vector(numLengthDice);
-		lengthDiceValue.setSize(numLengthDice);
-		lengthDiceMax.setSize(numLengthDice);
-		lengthDiceRollCheck.setSize(numLengthDice);
+        lengthDiceValue = new Vector<Integer>(numLengthDice);
+        lengthDiceMax = new Vector<Integer>(numLengthDice);
+        lengthDiceRollCheck = new Vector<Integer>(numLengthDice);
+        lengthDiceValue.setSize(numLengthDice);
+        lengthDiceMax.setSize(numLengthDice);
+        lengthDiceRollCheck.setSize(numLengthDice);
 	}
 
 	public Note getNextNote() {
@@ -90,7 +91,7 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
 		lengthDiceValue.setElementAt(new Integer(rolledValue), diceNumber);
 	}
 
-        private int incrementCheckerAndReturnMaxIndex(Vector toIncrement) {
+        private int incrementCheckerAndReturnMaxIndex(Vector<Integer> toIncrement) {
                 int i;
                 for (i = 0; i < toIncrement.size(); i++) {
                         if ( ((Integer) toIncrement.elementAt(i) ).intValue() == 0) {
@@ -107,13 +108,13 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
                 return i;
         }
 
-	protected Vector pitchDiceValue;
-	private Vector pitchDiceMax;
-	private Vector pitchDiceRollCheck;
+	protected Vector<Integer> pitchDiceValue;
+	private Vector<Integer> pitchDiceMax;
+	private Vector<Integer> pitchDiceRollCheck;
 
-	protected Vector lengthDiceValue;
-	private Vector lengthDiceMax;
-	private Vector lengthDiceRollCheck;
+	protected Vector<Integer> lengthDiceValue;
+	private Vector<Integer> lengthDiceMax;
+	private Vector<Integer> lengthDiceRollCheck;
 
 	private java.util.Random randGen;
 }

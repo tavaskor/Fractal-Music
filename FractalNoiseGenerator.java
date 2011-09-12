@@ -123,7 +123,7 @@ class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGener
 	private Note nextNote;
 
 
-
+/*
         public static void main(String args[]) throws Exception {
                 NoteGenerator noteGen = new FractalNoiseGenerator(
                         new NoteRangeRestrictor(32, 95, 1, 128),
@@ -139,5 +139,5 @@ class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGener
                 seqer.stop();
                 System.exit(0);
         }
-
+*/
 }

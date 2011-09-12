@@ -1,10 +1,11 @@
 import java.util.Vector;
+import java.util.List;
 
 public class AdditiveNoteGenerator extends DiceRollNoteGenerator {
 
-	private static Vector determineDiceSides(int rangeSize, int numberOfDividingDice) {
+	private static List<Integer> determineDiceSides(int rangeSize, int numberOfDividingDice) {
 		int numberOfSides = (rangeSize / numberOfDividingDice) + 1;
-		Vector resultVector = new Vector();
+		Vector<Integer> resultVector = new Vector<Integer>();
 		for (int i = 0; i < numberOfDividingDice; i++) {
 			resultVector.addElement( new Integer(numberOfSides) );
 		}
@@ -31,10 +32,10 @@ public class AdditiveNoteGenerator extends DiceRollNoteGenerator {
 		return resultVector;
 	}
 
-	private static int sumOfValues(Vector toSum) {
+	private static int sumOfValues(List<? extends Integer> toSum) {
 		int sum = 0;
 		for (int i = 0; i < toSum.size(); i++) {
-			sum += ( (Integer) toSum.elementAt(i)).intValue();
+			sum += toSum.get(i);
 		}
 		return sum;
 	}
@@ -65,18 +66,11 @@ public class AdditiveNoteGenerator extends DiceRollNoteGenerator {
 		return Converter.consecutiveIntToNoteLength( diceSum(lengthDiceValue) + lowestConsecutiveLength);
 	}
 
-	private String stringList(Vector vec) {
-		String retVal = new String();
-		for (int i = 0; i < vec.size(); i++) {
-			retVal = retVal + " " + ( (Integer) vec.elementAt(i)).intValue();
-		}
-		return retVal;
-	}
 
-	private int diceSum(Vector listOfDice) {
+	private int diceSum(List<? extends Integer> listOfDice) {
 		int sum = 0;
 		for (int i = 0; i < listOfDice.size(); i++) {
-			sum += ( (Integer) listOfDice.elementAt(i)).intValue();
+			sum += listOfDice.get(i);
 		}
 		return sum;
 	}
@@ -87,6 +81,7 @@ public class AdditiveNoteGenerator extends DiceRollNoteGenerator {
 
 
 
+	/*
 	public static void main(String args[]) throws Exception {
                 NoteGenerator noteGen = new AdditiveNoteGenerator(
                         new NoteRangeRestrictor(52, 55, 1, 32),
@@ -103,5 +98,6 @@ public class AdditiveNoteGenerator extends DiceRollNoteGenerator {
                 seqer.stop();
                 System.exit(0);
         }
+        */
 
 }
