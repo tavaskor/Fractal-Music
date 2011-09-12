@@ -1,0 +1,12 @@
+This was originally developed as a project for the course
+PMATH 370: Chaos and Fractals.
+
+It was based on a paper that discussed properties of white, brown, and pink
+noise as applied to music.  Any reference to this original paper has been lost,
+but it seems likely it was the following:
+
+http://www.maths.uq.edu.au/~mrb/qamt/fractalmusic.pdf
+("MUSIC FROM FRACTAL NOISE" by Michael Bulmer, 13 January 2000)
+
+with the algorithm for pink music extended to music of arbitrary length
+and the proprerties of each type of noise applied both to note pitch and duration.
