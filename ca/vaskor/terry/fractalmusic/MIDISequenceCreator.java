@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 import javax.sound.midi.*;
 
 import java.util.Queue;

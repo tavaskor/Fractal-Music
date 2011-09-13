@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 public abstract class BrownNoiseGenerator extends RandomizedNoteGenerator implements NoteGenerator {
 	public BrownNoiseGenerator(NoteRangeRestrictor overallRange, long randomSeed, int lowPitchChange, int highPitchChange, int lowLengthStep, int highLengthStep) {
 		super(overallRange, randomSeed);

@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 public class RandomizedNoteGenerator {
 	public RandomizedNoteGenerator(NoteRangeRestrictor nrr, long randomSeed) {
 		restrictor = nrr;

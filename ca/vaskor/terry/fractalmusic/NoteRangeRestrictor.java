@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 public class NoteRangeRestrictor {
 	public NoteRangeRestrictor(int lowPitch, int highPitch, int lowLength, int highLength) throws OutOfMIDIRangeException, IllegalNoteLengthException {
 		if (outOfMIDIRange(lowPitch)) {

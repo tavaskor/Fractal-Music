@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 class MultiplicativeNoteGenerator extends DiceRollNoteGenerator {
 
 	private static int getNumPitchDice(NoteRangeRestrictor nrr) throws InvalidDataSpread {

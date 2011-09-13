@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.lang.NumberFormatException;

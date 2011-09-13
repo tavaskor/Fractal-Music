@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 // Class to represent a note; takes values for pitch and note length
 
 public class Note {

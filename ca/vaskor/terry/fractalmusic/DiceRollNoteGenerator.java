@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 import java.util.Vector;
 import java.util.List;
 

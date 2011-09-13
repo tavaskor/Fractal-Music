@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 import java.util.Vector;
 
 class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGenerator {

@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 public class OutOfMIDIRangeException extends Exception {
 	/**
 	 * 

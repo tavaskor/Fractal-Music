@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 import javax.swing.JApplet;
 
 public class MainGui extends JApplet {

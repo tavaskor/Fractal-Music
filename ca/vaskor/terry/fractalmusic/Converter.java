@@ -1,3 +1,5 @@
+package ca.vaskor.terry.fractalmusic;
+
 public class Converter {
 	public static int noteLengthToConsecutiveInt(int noteLength) {
 		return (int) ( Math.log(noteLength) / Math.log(2) );
