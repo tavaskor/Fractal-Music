@@ -1,12 +1,13 @@
 package ca.vaskor.terry.fractalmusic;
 
-public class InvalidDataSpread extends Exception {
+public class InvalidDataSpreadException extends Exception {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7457723404252772902L;
 
-	public InvalidDataSpread(String blarg) {
+	public InvalidDataSpreadException(String blarg) {
 		super(blarg);
 	}
 }
+ 
