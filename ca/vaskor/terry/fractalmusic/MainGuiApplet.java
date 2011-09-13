@@ -2,7 +2,7 @@ package ca.vaskor.terry.fractalmusic;
 
 import javax.swing.JApplet;
 
-public class MainGui extends JApplet {
+public class MainGuiApplet extends JApplet {
 	/**
 	 * 
 	 */
