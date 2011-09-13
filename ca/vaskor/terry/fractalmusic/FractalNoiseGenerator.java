@@ -3,7 +3,7 @@ package ca.vaskor.terry.fractalmusic;
 import java.util.Vector;
 
 class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGenerator {
-	public FractalNoiseGenerator(NoteRangeRestrictor nrr, long randomSeed) throws InvalidDataSpread {
+	public FractalNoiseGenerator(NoteRangeRestrictor nrr, long randomSeed) throws InvalidDataSpreadException {
 		super(nrr, randomSeed);
 
 		// All ranges must be powers of 2
@@ -15,8 +15,8 @@ class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGener
 
 		// Now need to size vectors
 		int pitchGapSize = (int) ( Math.log(pitchDiff) / Math.log(2) );
-		pitchRollChecker = new Vector();
-		pitchRollValues = new Vector();
+		pitchRollChecker = new Vector<Integer>();
+		pitchRollValues = new Vector<Integer>();
 		for (int i = 0; i < pitchGapSize; i++) {
 			pitchRollChecker.addElement(new Integer(0));
 			pitchRollValues.addElement(new Integer(getNextInt(2)) );
@@ -24,8 +24,8 @@ class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGener
 		}
 
 		int lengthGapSize = (int) ( Math.log(lengthDiff) / Math.log(2) );
-		lengthRollChecker = new Vector();
-		lengthRollValues = new Vector();
+		lengthRollChecker = new Vector<Integer>();
+		lengthRollValues = new Vector<Integer>();
 		for (int i = 0; i < lengthGapSize; i++) {
 			lengthRollChecker.addElement(new Integer(0));
 			lengthRollValues.addElement(new Integer(getNextInt(2)) );
@@ -79,16 +79,16 @@ class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGener
 		return new Note(notePitch, toReturnLength);
 	}
 
-	private int incrementCheckerAndReturnMaxIndex(Vector toIncrement) {
+	private int incrementCheckerAndReturnMaxIndex(Vector<Integer> toIncrement) {
 		int i;
 		for (i = 0; i < toIncrement.size(); i++) {
-			if ( ((Integer) toIncrement.elementAt(i) ).intValue() == 0) {
+			if ( toIncrement.elementAt(i) == 0) {
 				toIncrement.remove(i);
-				toIncrement.insertElementAt(new Integer(1), i);
+				toIncrement.insertElementAt(1, i);
 				break;
 			}
 			toIncrement.remove(i);
-			toIncrement.insertElementAt(new Integer(0), i);
+			toIncrement.insertElementAt(0, i);
 		}
 		if (i >= toIncrement.size()) {
 			i = toIncrement.size() - 1;
@@ -96,7 +96,7 @@ class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGener
 		return i;
 	}
 
-	private void doRollMultiplier(Vector pitchRollValues, int arrayLocation) {
+	private void doRollMultiplier(Vector<Integer> pitchRollValues, int arrayLocation) {
 		if (( (Integer)pitchRollValues.elementAt(arrayLocation) ).intValue() == 1) {
 			for (int j = 0; j < arrayLocation; j++) {
 				Integer test = new Integer( ((Integer) pitchRollValues.elementAt(arrayLocation)).intValue() );
@@ -108,19 +108,19 @@ class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGener
 	}
 
 
-	private void checkValueSpread(int pitchDiff, String valuename) throws InvalidDataSpread {     
+	private void checkValueSpread(int pitchDiff, String valuename) throws InvalidDataSpreadException {     
                 if ( (pitchDiff != 128) && (pitchDiff != 64) && (pitchDiff != 32)
                         && (pitchDiff != 16) && (pitchDiff != 8) &&
                         (pitchDiff != 4) && (pitchDiff != 2) && (pitchDiff != 1) ) {
-                        throw new InvalidDataSpread(valuename + " spread " + pitchDiff);
+                        throw new InvalidDataSpreadException(valuename + " spread " + pitchDiff);
                 }
 	}
 
-	private Vector pitchRollChecker;
-	private Vector lengthRollChecker;
+	private Vector<Integer> pitchRollChecker;
+	private Vector<Integer> lengthRollChecker;
 
-	private Vector pitchRollValues;
-	private Vector lengthRollValues;
+	private Vector<Integer> pitchRollValues;
+	private Vector<Integer> lengthRollValues;
 
 	private Note nextNote;
 
