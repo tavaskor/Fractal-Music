@@ -1,7 +1,7 @@
 package ca.vaskor.terry.fractalmusic;
 
 public abstract class BrownNoiseGenerator extends RandomizedNoteGenerator implements NoteGenerator {
-	public BrownNoiseGenerator(NoteRangeRestrictor overallRange, long randomSeed, int lowPitchChange, int highPitchChange, int lowLengthStep, int highLengthStep) {
+	public BrownNoiseGenerator(NoteRangeRestrictor overallRange, long randomSeed, int lowPitchChange, int highPitchChange, int lowLengthStep, int highLengthStep) throws OutOfMIDIRangeException {
 		super(overallRange, randomSeed);
 		lowPC = lowPitchChange;
 		highPC = highPitchChange;
@@ -15,10 +15,11 @@ public abstract class BrownNoiseGenerator extends RandomizedNoteGenerator implem
 		int high = Converter.noteLengthToConsecutiveInt( restrictor.getShortestLength() );
 		int length = Converter.consecutiveIntToNoteLength( (low + high) / 2 );
 
-		nextNote = new Note(pitch, length);
+		nextNote = new Note(new MIDIPitch(pitch), 
+                        Duration.durationFromDenominator(length));
 	}
 
-	public Note getNextNote() {
+	public Note getNextNote() throws OutOfMIDIRangeException {
 		Note currentNote = nextNote;
 		nextNote = calculateNextNote(currentNote);
 		return currentNote;
@@ -29,7 +30,7 @@ public abstract class BrownNoiseGenerator extends RandomizedNoteGenerator implem
 	protected int getLowestConsecutiveLengthChange() { return lowLC; }
 	protected int getHighestConsecutiveLengthChange() { return highLC; }
 
-	protected abstract Note calculateNextNote(Note baseNote);
+	protected abstract Note calculateNextNote(Note baseNote) throws OutOfMIDIRangeException;
 
 	private Note nextNote;
 

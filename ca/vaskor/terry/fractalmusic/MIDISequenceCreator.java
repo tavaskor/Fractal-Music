@@ -123,14 +123,14 @@ public class MIDISequenceCreator implements Runnable {
 		// Add an extra note to the queue/sequence
 		private void addANote() throws Exception {			
 			Note toAdd = gen.getNextNote();
-			int pitch = toAdd.getPitch();
+			int pitch = toAdd.getPitch().getMIDICode();
 			
 			ShortMessage noteOn = new ShortMessage();
 			noteOn.setMessage(ShortMessage.NOTE_ON, 1, pitch,
 					DEFAULT_VELOCITY);
 			MidiEvent meep = new MidiEvent(noteOn, adderPosition);
 
-			int length = toAdd.getDuration();
+			int length = toAdd.getDuration().getNumericDenominator();
 			adderPosition += Converter.noteLengthToMIDITicks(length);
 			
 			ShortMessage noteOff = new ShortMessage();

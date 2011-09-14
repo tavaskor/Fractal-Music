@@ -3,7 +3,7 @@ package ca.vaskor.terry.fractalmusic;
 import java.util.Vector;
 
 class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGenerator {
-	public FractalNoiseGenerator(NoteRangeRestrictor nrr, long randomSeed) throws InvalidDataSpreadException {
+	public FractalNoiseGenerator(NoteRangeRestrictor nrr, long randomSeed) throws InvalidDataSpreadException, OutOfMIDIRangeException {
 		super(nrr, randomSeed);
 
 		// All ranges must be powers of 2
@@ -44,13 +44,13 @@ class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGener
 		nextNote = calculateNextNote();
 	}
 
-	public Note getNextNote() {
+	public Note getNextNote() throws OutOfMIDIRangeException {
 		Note currentNote = nextNote;
 		nextNote = calculateNextNote();
 		return currentNote;
 	}
 
-	private Note calculateNextNote() {
+	private Note calculateNextNote() throws OutOfMIDIRangeException {
 		int maxPitchIndex =  incrementCheckerAndReturnMaxIndex(pitchRollChecker);
 		int maxLengthIndex = incrementCheckerAndReturnMaxIndex(lengthRollChecker);
 		for (int i = 0; i <= maxPitchIndex; i++) {
@@ -76,7 +76,8 @@ class FractalNoiseGenerator extends RandomizedNoteGenerator implements NoteGener
 
 		int toReturnLength = Converter.consecutiveIntToNoteLength(noteLength);
 		System.out.println("Note: pitch " + notePitch + ", length " + toReturnLength);
-		return new Note(notePitch, toReturnLength);
+		return new Note(new MIDIPitch(notePitch), 
+                        Duration.durationFromDenominator(toReturnLength));
 	}
 
 	private int incrementCheckerAndReturnMaxIndex(Vector<Integer> toIncrement) {

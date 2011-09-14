@@ -5,7 +5,7 @@ public class WhiteNoiseGenerator extends RandomizedNoteGenerator implements Note
 		super(nrr, randomSeed);
 	}
 
-	public Note getNextNote() {
+	public Note getNextNote() throws OutOfMIDIRangeException {
 		int lowestPitch = restrictor.getLowPitch();
 		int pitch = lowestPitch + getNextInt( restrictor.getHighPitch() - lowestPitch + 1);
 
@@ -17,7 +17,8 @@ public class WhiteNoiseGenerator extends RandomizedNoteGenerator implements Note
 			lowRange + 1);
 		int length = Converter.consecutiveIntToNoteLength(randomNum);
 
-		return new Note(pitch, length);
+		return new Note(new MIDIPitch(pitch), 
+                        Duration.durationFromDenominator(length));
 	}
 
         public static void main(String args[]) throws Exception {

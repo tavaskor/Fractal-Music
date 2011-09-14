@@ -52,13 +52,13 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
         lengthDiceRollCheck.setSize(numLengthDice);
 	}
 
-	public Note getNextNote() {
+	public Note getNextNote() throws OutOfMIDIRangeException {
 		int highestPitchToChange = incrementCheckerAndReturnMaxIndex(pitchDiceRollCheck);
 		int highestLengthToChange = incrementCheckerAndReturnMaxIndex(lengthDiceRollCheck);
 		return calculateNextRolledNote(highestPitchToChange, highestLengthToChange);
 	}
 
-	private Note calculateNextRolledNote(int highestPitchDice, int highestLengthDice) {
+	private Note calculateNextRolledNote(int highestPitchDice, int highestLengthDice) throws OutOfMIDIRangeException {
 		for (int i = 0; i <= highestPitchDice; i++) {
 			rollPitchDice(i);
 		}
@@ -71,7 +71,8 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
 
 		System.out.println("Note: pitch " + pitchReturn +
 			", length " + lengthReturn);
-		return new Note(pitchReturn, lengthReturn);
+		return new Note(new MIDIPitch(pitchReturn), 
+                        Duration.durationFromDenominator(lengthReturn));
 	}
 
 	protected abstract int calculateNextPitch();

@@ -1,16 +1,20 @@
 package ca.vaskor.terry.fractalmusic;
 
 public class ReflectingBrownNoiseGenerator extends BrownNoiseGenerator {
-	public ReflectingBrownNoiseGenerator(NoteRangeRestrictor nrr, long randomSeed, int lowestPitchChange, int highestPitchChange, int lowestLengthStep, int highestLengthStep) {
-	super(nrr, randomSeed, lowestPitchChange, highestPitchChange, lowestLengthStep, highestLengthStep);
+	public ReflectingBrownNoiseGenerator(
+                NoteRangeRestrictor nrr, long randomSeed, 
+                int lowestPitchChange, int highestPitchChange,
+                int lowestLengthStep, int highestLengthStep)
+                throws OutOfMIDIRangeException {
+            super(nrr, randomSeed, lowestPitchChange, highestPitchChange, lowestLengthStep, highestLengthStep);
 	}
 
-	protected Note calculateNextNote(Note baseNote) {
-		int newPitch = calculateChange( baseNote.getPitch(),
+	protected Note calculateNextNote(Note baseNote) throws OutOfMIDIRangeException {
+		int newPitch = calculateChange( baseNote.getPitch().getMIDICode(),
 			getLowestPitchChange(), getHighestPitchChange(),
 			restrictor.getLowPitch(), restrictor.getHighPitch() );
 
-		int baseConLen = Converter.noteLengthToConsecutiveInt( baseNote.getDuration() );
+		int baseConLen = Converter.noteLengthToConsecutiveInt( baseNote.getDuration().getNumericDenominator() );
 		int longestConLen = Converter.noteLengthToConsecutiveInt( restrictor.getLongestLength() );
 		int shortestConLen = Converter.noteLengthToConsecutiveInt( restrictor.getShortestLength() );
 		int newConLen = calculateChange( baseConLen, 
@@ -18,7 +22,8 @@ public class ReflectingBrownNoiseGenerator extends BrownNoiseGenerator {
 			getHighestConsecutiveLengthChange(),
 			longestConLen, shortestConLen );
 		int newLength = Converter.consecutiveIntToNoteLength(newConLen);
-		return new Note(newPitch, newLength);
+		return new Note(new MIDIPitch(newPitch), 
+                        Duration.durationFromDenominator(newLength));
 	}
 
 	private int calculateChange(int startVal, int maxNegChange,
