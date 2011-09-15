@@ -29,20 +29,26 @@ public class SharedPanel extends JPanel {
 	
 	private static final int NUM_PITCHES = 128;
 	private static final int PITCH_IN_OCTAVE = 12;
+        
+        // TODO:
+        // Replace the functions getNoteName and getPitchNames
+        // below with something simpler that makes direct use
+        // of the name of all 127 pitches as returned by the
+        // MIDIPitch class.
 	private static String getNoteName(int noteWithinOctave) {
 		switch (noteWithinOctave) {
-		case 0: return "C";
-		case 1: return "C#";
-		case 2: return "D";
-		case 3: return "D#";
-		case 4: return "E";
-		case 5: return "F";
-		case 6: return "F#";
-		case 7: return "G";
-		case 8: return "G#";
-		case 9: return "A";
-		case 10: return "A#";
-		case 11: return "B";
+		case 0: return PitchName.C.toString();
+		case 1: return PitchName.C_SHARP.toString();
+		case 2: return PitchName.D.toString();
+		case 3: return PitchName.D_SHARP.toString();
+		case 4: return PitchName.E.toString();
+		case 5: return PitchName.F.toString();
+		case 6: return PitchName.F_SHARP.toString();
+		case 7: return PitchName.G.toString();
+		case 8: return PitchName.G_SHARP.toString();
+		case 9: return PitchName.A.toString();
+		case 10: return PitchName.A_SHARP.toString();
+		case 11: return PitchName.B.toString();
 		default: return "DNE";
 		}
 	}
