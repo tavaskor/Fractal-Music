@@ -42,30 +42,25 @@ public class AdditiveNoteGenerator extends DiceRollNoteGenerator {
 		return sum;
 	}
 
-        private void setMinimums(NoteRangeRestrictor nrr) {
-                lowestPitch = nrr.getLowPitch();
-                lowestConsecutiveLength = Converter.noteLengthToConsecutiveInt( nrr.getLongestLength());
-        }
-
-	public AdditiveNoteGenerator(NoteRangeRestrictor nrr, int numberOfPitchDice, int numberOfLengthDice, long randomSeed) {
-		super(
-			determineDiceSides( nrr.getHighPitch() - nrr.getLowPitch() + 1, numberOfPitchDice),
-			 determineDiceSides( Converter.noteLengthToConsecutiveInt(nrr.getShortestLength()) - Converter.noteLengthToConsecutiveInt(nrr.getLongestLength()) + 1, numberOfLengthDice),
-			randomSeed
-		);
-		setMinimums(nrr);
+        public AdditiveNoteGenerator(NoteRangeRestrictor nrr, int numberOfPitchDice, int numberOfLengthDice, long randomSeed) {
+            super(
+                    nrr,
+                    determineDiceSides( nrr.getNumPitches(), numberOfPitchDice),
+                    determineDiceSides( nrr.getNumDurations(), numberOfLengthDice),
+                    randomSeed
+                    );
 	}
 
 
 
+    @Override
 	protected int calculateNextPitch() { 
-		//System.out.println("Pitch dice values:" + stringList(pitchDiceValue));
-		return diceSum(pitchDiceValue) + lowestPitch;
+		return diceSum(pitchDiceValue);
 	}
 
+    @Override
 	protected int calculateNextLength() {
-		//System.out.println("Length dice values:" + stringList(lengthDiceValue));
-		return Converter.consecutiveIntToNoteLength( diceSum(lengthDiceValue) + lowestConsecutiveLength);
+		return diceSum(lengthDiceValue);
 	}
 
 
@@ -76,30 +71,4 @@ public class AdditiveNoteGenerator extends DiceRollNoteGenerator {
 		}
 		return sum;
 	}
-
-	private int lowestPitch;
-	private int lowestConsecutiveLength;
-
-
-
-
-	/*
-	public static void main(String args[]) throws Exception {
-                NoteGenerator noteGen = new AdditiveNoteGenerator(
-                        new NoteRangeRestrictor(52, 55, 1, 32),
-			2, 3,
-                        24958);
-                MIDISequenceCreator msc = new MIDISequenceCreator(noteGen, 130);
- 
-                javax.sound.midi.Sequence seq = msc.getSequence();
-                javax.sound.midi.Sequencer seqer = javax.sound.midi.MidiSystem.getSequencer();
-                seqer.open();
-                seqer.setSequence(seq);
-                seqer.start();
-                while (seqer.isRunning()) {}
-                seqer.stop();
-                System.exit(0);
-        }
-        */
-
 }

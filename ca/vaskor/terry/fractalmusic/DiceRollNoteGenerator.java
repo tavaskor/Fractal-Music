@@ -4,7 +4,7 @@ import java.util.Vector;
 import java.util.List;
 
 public abstract class DiceRollNoteGenerator implements NoteGenerator {
-	public DiceRollNoteGenerator(int numPitchDice, int numDiceSides, int numLengthDice, int numLengthSides, long randomSeed) {
+	public DiceRollNoteGenerator(NoteRangeRestrictor restrictor, int numPitchDice, int numDiceSides, int numLengthDice, int numLengthSides, long randomSeed) {
 		createDice(numPitchDice, numLengthDice);
 
 		for (int i = 0; i < numPitchDice; i++) {
@@ -17,9 +17,11 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
 		}
 
 		randGen = new java.util.Random(randomSeed);
+                
+                nrr = restrictor;
 	}
 
-	public DiceRollNoteGenerator(List<? extends Integer> numSidesPerPitchDice, List<? extends Integer> numSidesPerLengthDice, long randomSeed) {
+	public DiceRollNoteGenerator(NoteRangeRestrictor restrictor, List<? extends Integer> numSidesPerPitchDice, List<? extends Integer> numSidesPerLengthDice, long randomSeed) {
 		int numPitchDice = numSidesPerPitchDice.size();
 		int numLengthDice = numSidesPerLengthDice.size();
 		createDice(numPitchDice, numLengthDice);
@@ -34,6 +36,8 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
 		}
 
 		randGen = new java.util.Random(randomSeed);
+                
+                nrr = restrictor;
 	}
 
 	private void createDice(int numPitchDice, int numLengthDice) {
@@ -66,13 +70,12 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
 			rollLengthDice(i);
 		}
 
-		int pitchReturn = calculateNextPitch();
-		int lengthReturn = calculateNextLength();
+		MIDIPitch pitchReturn = nrr.getPitch(calculateNextPitch());
+		Duration lengthReturn = nrr.getDuration(calculateNextLength());
 
 		System.out.println("Note: pitch " + pitchReturn +
 			", length " + lengthReturn);
-		return new Note(new MIDIPitch(pitchReturn), 
-                        Duration.durationFromDenominator(lengthReturn));
+                return new Note(pitchReturn, lengthReturn);
 	}
 
 	protected abstract int calculateNextPitch();
@@ -110,6 +113,8 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
                 }
                 return i;
         }
+        
+        private NoteRangeRestrictor nrr;
 
 	protected Vector<Integer> pitchDiceValue;
 	private Vector<Integer> pitchDiceMax;

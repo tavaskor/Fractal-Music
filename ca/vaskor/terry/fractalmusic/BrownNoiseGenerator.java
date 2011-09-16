@@ -9,30 +9,38 @@ public abstract class BrownNoiseGenerator extends RandomizedNoteGenerator implem
 		highLC = highLengthStep;
 
 		// Set first note to midpoint of ranges
-		int pitch = (int) ( (restrictor.getLowPitch() + restrictor.getHighPitch()) / 2 );
+		nextPitchIndex = (int) ( restrictor.getNumPitches() / 2 );
+		nextLengthIndex = (int) ( restrictor.getNumDurations() / 2 );
 
-		int low = Converter.noteLengthToConsecutiveInt( restrictor.getLongestLength() );
-		int high = Converter.noteLengthToConsecutiveInt( restrictor.getShortestLength() );
-		int length = Converter.consecutiveIntToNoteLength( (low + high) / 2 );
-
-		nextNote = new Note(new MIDIPitch(pitch), 
-                        Duration.durationFromDenominator(length));
+//		nextNote = new Note(restrictor.getPitch(pitchIndex), 
+//                        restrictor.getDuration(lengthIndex));
 	}
 
+    @Override
 	public Note getNextNote() throws OutOfMIDIRangeException {
-		Note currentNote = nextNote;
-		nextNote = calculateNextNote(currentNote);
-		return currentNote;
+		int currentPitchIndex = nextPitchIndex;
+                int currentLengthIndex = nextLengthIndex;
+		nextPitchIndex = calculateChange(
+                        currentPitchIndex, lowPC, highPC, restrictor.getNumPitches()
+                        );
+		nextLengthIndex = calculateChange(
+                        currentLengthIndex, lowLC, highLC, restrictor.getNumDurations()
+                        );
+		return new Note(restrictor.getPitch(currentPitchIndex), 
+                        restrictor.getDuration(currentLengthIndex));
 	}
-
+/*
 	protected int getLowestPitchChange() { return lowPC; }
 	protected int getHighestPitchChange() { return highPC; }
 	protected int getLowestConsecutiveLengthChange() { return lowLC; }
 	protected int getHighestConsecutiveLengthChange() { return highLC; }
+     */
 
-	protected abstract Note calculateNextNote(Note baseNote) throws OutOfMIDIRangeException;
+	protected abstract int calculateChange(
+                int baseIndex, int maxNegChange,
+                int maxPosChange, int maxIndex);
 
-	private Note nextNote;
+        private int nextPitchIndex, nextLengthIndex;
 
 	private int lowPC;
 	private int highPC;

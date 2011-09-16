@@ -41,41 +41,29 @@ public class MainPanel extends JPanel implements java.awt.event.ActionListener {
 		}
 		
 		// Read all of the general options.
-		int highPitch, lowPitch;
+		MIDIPitch highPitch, lowPitch;
 		try {
 			lowPitch = sharedOpts.getLowPitch();
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "The low pitch specified is not a valid number.");
 			return;
-		}
+		} catch (OutOfMIDIRangeException e) {
+			JOptionPane.showMessageDialog(this, "The low pitch specified is not a valid MIDI pitch.");
+			return;
+                }
+                
 		try {
 			highPitch = sharedOpts.getHighPitch();
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "The high pitch specified is not a valid number.");
 			return;
-		}
+		} catch (OutOfMIDIRangeException e) {
+			JOptionPane.showMessageDialog(this, "The low pitch specified is not a valid MIDI pitch.");
+			return;
+                }
 
-		if (highPitch < lowPitch) {
-			JOptionPane.showMessageDialog(this, "Low pitch " + lowPitch + " must be lower than high pitch " + highPitch);
-			return;
-		}
-		if (highPitch > 127) {
-			JOptionPane.showMessageDialog(this, "Highest valid MIDI pitch is 127");
-			return;
-		}
-		if (lowPitch < 0) {
-			JOptionPane.showMessageDialog(this, "Lowest valid MIDI pitch is 0");
-			return;
-		}
-
-		int selectedIndex = sharedOpts.getLongLength();
-		int longLength = Converter.consecutiveIntToNoteLength(selectedIndex);
-		selectedIndex = sharedOpts.getShortLength();
-		int shortLength =  Converter.consecutiveIntToNoteLength(selectedIndex);
-		if (longLength > shortLength) {
-			JOptionPane.showMessageDialog(this, "Longest note length should be longer than shortest note length");
-			return;
-		}
+		Duration longLength = sharedOpts.getLongLength();
+		Duration shortLength = sharedOpts.getShortLength();
 
 		long randomSeed;
 		try {
@@ -85,17 +73,6 @@ public class MainPanel extends JPanel implements java.awt.event.ActionListener {
 			return;
 		}
 		
-		/*
-		int numNotes;
-		try {
-			numNotes = sharedOpts.getNumberOfNotes();
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "Number of notes is not specified as a valid integer");
-			return;
-		}
-		*/
-		
-
 		// Now create the requested type of NoteGenerator
 		NoteGenerator ng;
 		try {
@@ -127,4 +104,7 @@ public class MainPanel extends JPanel implements java.awt.event.ActionListener {
 	private JButton generateCommand = new JButton(START_STRING);
 	private SharedPanel sharedOpts = new SharedPanel();
 	private NoteGeneratorReturner ngr = new RadioGeneratorPanel();
+        
+        
+
 }

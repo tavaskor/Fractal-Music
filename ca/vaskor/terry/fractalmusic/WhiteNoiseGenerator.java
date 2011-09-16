@@ -1,34 +1,16 @@
 package ca.vaskor.terry.fractalmusic;
 
 public class WhiteNoiseGenerator extends RandomizedNoteGenerator implements NoteGenerator {
-	public WhiteNoiseGenerator(NoteRangeRestrictor nrr, long randomSeed) {
-		super(nrr, randomSeed);
+    public WhiteNoiseGenerator(NoteRangeRestrictor nrr, long randomSeed) {
+        super(nrr, randomSeed);
+    }
+    
+    @Override
+    public Note getNextNote() throws OutOfMIDIRangeException {
+        int pitchIndex = getNextInt(restrictor.getNumPitches());
+        int lengthIndex = getNextInt(restrictor.getNumDurations());
+        
+        return new Note(restrictor.getPitch(pitchIndex),
+                restrictor.getDuration(lengthIndex));
 	}
-
-	public Note getNextNote() throws OutOfMIDIRangeException {
-		int lowestPitch = restrictor.getLowPitch();
-		int pitch = lowestPitch + getNextInt( restrictor.getHighPitch() - lowestPitch + 1);
-
-		int longLength = restrictor.getLongestLength();
-		int shortLength = restrictor.getShortestLength();
-		int lowRange = Converter.noteLengthToConsecutiveInt(longLength);
-		int randomNum = lowRange + getNextInt( 
-			Converter.noteLengthToConsecutiveInt(shortLength) -
-			lowRange + 1);
-		int length = Converter.consecutiveIntToNoteLength(randomNum);
-
-		return new Note(new MIDIPitch(pitch), 
-                        Duration.durationFromDenominator(length));
-	}
-
-        public static void main(String args[]) throws Exception {
-                NoteGenerator noteGen = new WhiteNoiseGenerator(
-                        new NoteRangeRestrictor(35, 85, 1, 64),
-                        58);
-                MIDISequenceCreator msc = new MIDISequenceCreator(noteGen);                                        
-                msc.playSequence();
-                Thread.sleep(10000);
-                msc.haltExecution();
-                System.exit(0);
-        }
 }

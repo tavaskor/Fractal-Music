@@ -1,19 +1,11 @@
 package ca.vaskor.terry.fractalmusic;
 
+
+// TODO:
+// Eliminate  the remaining "ticks per" stuff... 
+// probably belongs in a more general class that returns values 
+// based on a given tempo setting.
 public class Converter {
-	public static int noteLengthToConsecutiveInt(int noteLength) {
-		return (int) ( Math.log(noteLength) / Math.log(2) );
-	}
-
-	// Need to emulate returning noteLEngth^2
-	public static int consecutiveIntToNoteLength(int noteLength) {
-		int retVal = 1;
-		for (int i = 1; i < noteLength + 1; i++) {
-			retVal *= 2;
-		}
-		return retVal;
-	}
-
 	public static final int TICKS_PER_QUARTER_NOTE = 64;
 
 	public static int noteLengthToMIDITicks(int noteLength) throws IllegalNoteLengthException {
@@ -39,18 +31,6 @@ public class Converter {
 		for (int i = 1; i < 8; i++) {
 			noteLengths[i] = noteLengths[i - 1] * 2;
 		}
-
-		for (int i = 0; i < 8; i++) {
-			System.out.println("noteLengthToConsecutiveInt(" + noteLengths[i] + "): " + noteLengthToConsecutiveInt(noteLengths[i]));
-		}
-
-		System.out.println();
-
-		for (int i = 0; i <= 7; i++) {
-			System.out.println("consecutiveIntToNoteLength(" + i + "): " + consecutiveIntToNoteLength(i));
-		}
-
-		System.out.println();
 
 		for (int i = 0; i < 8; i++) {
 			System.out.println("noteLengthToMIDITicks(" + noteLengths[i] + "): " + noteLengthToMIDITicks(noteLengths[i]));
