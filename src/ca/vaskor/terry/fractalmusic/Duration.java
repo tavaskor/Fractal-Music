@@ -6,6 +6,7 @@ package ca.vaskor.terry.fractalmusic;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -16,7 +17,7 @@ public enum Duration {
     THIRTY_SECOND(32), SIXTEENTH(16), EIGHTH(8), 
     QUARTER(4), HALF(2), WHOLE(1);
     
-    Duration(int denominator) {
+    private Duration(int denominator) {
         denom = denominator;
     }
     
@@ -47,22 +48,20 @@ public enum Duration {
         return firstPart + " note";
     }
     
-    // NB: This seems somewhat ridiculous, but it will work quickly for now.
-    //     It's assumed the array slice from MIDIPitch is better if this is
-    //     used repeatedly / frequently...
     public static List<Duration> getRange(Duration end1, Duration end2) {
-        if (end2.ordinal() < end1.ordinal()) { return getRange(end2, end1); }
+        if (end2.compareTo(end1) < 0) { return getRange(end2, end1); }
         
-        ArrayList<Duration> returnDurations = new ArrayList<Duration>();
-        for (Duration d : Duration.values()) {
-            if ((end1.ordinal() <= d.ordinal()) &&
-                    (end2.ordinal() >= d.ordinal())) {
-                returnDurations.add(d);
-            }
-        }
-        
-        return returnDurations;
+        return allDurations.subList(end1.ordinal(), end2.ordinal() + 1);
     }
+    
+    private static List<Duration> getAllDurations() {
+        return new ArrayList<Duration>(Arrays.asList(Duration.values()));
+    }
+    private static final List<Duration> allDurations = getAllDurations();
+    
+    public static final Duration LOWEST_DURATION = allDurations.get(0);
+    public static final Duration HIGHEST_DURATION = 
+            allDurations.get(allDurations.size() - 1);
     
     private int denom;
 }

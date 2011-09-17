@@ -30,8 +30,7 @@ public class SharedPanel extends JPanel {
 	private JTextField randomSeedField;
 	
 	private static final List<Duration> durations =
-                Duration.getRange(Duration.ONE_HUNDRED_TWENTY_EIGHTH, 
-                Duration.WHOLE);
+                Duration.getRange(Duration.LOWEST_DURATION, Duration.HIGHEST_DURATION);
                 
         private static final List<MIDIPitch> pitches= 
                 MIDIPitch.getRange(MIDIPitch.LOWEST_PITCH, MIDIPitch.HIGHEST_PITCH);
