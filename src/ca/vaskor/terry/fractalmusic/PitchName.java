@@ -10,7 +10,7 @@ package ca.vaskor.terry.fractalmusic;
  * @author tavaskor
  */
 
-public enum PitchName implements Comparable<PitchName> {
+public enum PitchName {
     C, C_SHARP, D, D_SHARP, E, F, 
     F_SHARP, G, G_SHARP, A, A_SHARP, B;
     

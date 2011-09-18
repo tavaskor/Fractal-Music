@@ -41,57 +41,27 @@ public class MainPanel extends JPanel implements java.awt.event.ActionListener {
 		}
 		
 		// Read all of the general options.
-		MIDIPitch highPitch, lowPitch;
-		try {
-			lowPitch = sharedOpts.getLowPitch();
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "The low pitch specified is not a valid number.");
-			return;
-		} catch (OutOfMIDIRangeException e) {
-			JOptionPane.showMessageDialog(this, "The low pitch specified is not a valid MIDI pitch.");
-			return;
-                }
-                
-		try {
-			highPitch = sharedOpts.getHighPitch();
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "The high pitch specified is not a valid number.");
-			return;
-		} catch (OutOfMIDIRangeException e) {
-			JOptionPane.showMessageDialog(this, "The low pitch specified is not a valid MIDI pitch.");
-			return;
-                }
-
-		Duration longLength = sharedOpts.getLongLength();
-		Duration shortLength = sharedOpts.getShortLength();
-
 		long randomSeed;
 		try {
 			randomSeed = sharedOpts.getRandomSeed();
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "Random seed is not a properly formatted long integer");
+			JOptionPane.showMessageDialog(this, "Random seed must be a properly formatted long integer");
 			return;
 		}
-		
-		// Now create the requested type of NoteGenerator
-		NoteGenerator ng;
-		try {
-			ng = ngr.getNoteGenerator(
-					new NoteRangeRestrictor(lowPitch, highPitch, longLength, shortLength),
-					randomSeed);
-		} catch (Throwable e) {
-			JOptionPane.showMessageDialog(this, "Error: " + e.toString() );
-			return;
-		}
+                
+                NoteGenerator ng = ngr.getNoteGenerator(
+                        sharedOpts.getNoteRangeRestrictor(),
+                        randomSeed
+                        );
 		
 		try {
-		    msc = new MIDISequenceCreator(ng);
-			msc.playSequence();
-			
-			currentlyPlayingMIDI = true;
-			generateCommand.setText(STOP_STRING);
+                    msc = new MIDISequenceCreator(ng);
+                    msc.playSequence();
+                    
+                    currentlyPlayingMIDI = true;
+                    generateCommand.setText(STOP_STRING);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "MIDI Error:\n" + e.toString());
+                    JOptionPane.showMessageDialog(this, "MIDI Error:\n" + e.toString());
 		}
 	}
 	
@@ -104,7 +74,4 @@ public class MainPanel extends JPanel implements java.awt.event.ActionListener {
 	private JButton generateCommand = new JButton(START_STRING);
 	private SharedPanel sharedOpts = new SharedPanel();
 	private NoteGeneratorReturner ngr = new RadioGeneratorPanel();
-        
-        
-
 }

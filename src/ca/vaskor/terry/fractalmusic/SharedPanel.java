@@ -79,21 +79,14 @@ public class SharedPanel extends JPanel {
 		lengthOptions.add(longLengthCombo);
 	}
 	
-	public MIDIPitch getLowPitch() throws NumberFormatException, OutOfMIDIRangeException {
-		return MIDIPitch.getMIDIPitch(lowPitchField.getSelectedIndex());
-	}
-	
-	public MIDIPitch getHighPitch() throws NumberFormatException, OutOfMIDIRangeException {
-		return MIDIPitch.getMIDIPitch(highPitchField.getSelectedIndex());
-	}
-	
-	public Duration getShortLength() {
-		return durations.get(shortLengthCombo.getSelectedIndex());
-	}
-	
-	public Duration getLongLength() {
-		return durations.get(longLengthCombo.getSelectedIndex());
-	}
+        public NoteRangeRestrictor getNoteRangeRestrictor() {
+            return new NoteRangeRestrictor(
+                    (MIDIPitch) lowPitchField.getSelectedItem(),
+                    (MIDIPitch) highPitchField.getSelectedItem(),
+                    (Duration) shortLengthCombo.getSelectedItem(),
+                    (Duration) longLengthCombo.getSelectedItem()
+                    );
+        }
 	
 	public Long getRandomSeed() throws NumberFormatException {
 		return new Long(randomSeedField.getText());
