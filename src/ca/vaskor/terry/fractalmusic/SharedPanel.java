@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.lang.NumberFormatException;
 
 import java.util.List;
+import java.util.Arrays;
 
 /**
  * 
@@ -26,6 +27,7 @@ public class SharedPanel extends JPanel {
 	private JComboBox highPitchField;
 	private JComboBox longLengthCombo;
 	private JComboBox shortLengthCombo;
+	private JComboBox scaleCombo;
 	
 	private JTextField randomSeedField;
 	
@@ -52,17 +54,21 @@ public class SharedPanel extends JPanel {
 		highPitchField = new JComboBox(pitches.toArray());
 		longLengthCombo = new JComboBox(durations.toArray());
 		shortLengthCombo = new JComboBox(durations.toArray());
+                scaleCombo = new JComboBox(ScaleType.values());
 		randomSeedField = new JTextField("12345", 10);
 
 		lowPitchField.setSelectedIndex(32);
 		highPitchField.setSelectedIndex(96);
 		longLengthCombo.setSelectedIndex(Duration.QUARTER.ordinal());
 		shortLengthCombo.setSelectedIndex(Duration.SIXTEENTH.ordinal());
+                scaleCombo.setSelectedIndex(0);
 
 		
 		// And then add these private fields to the proper subsections of the panel.
 
 		otherOptions.setLayout( new BoxLayout( otherOptions, BoxLayout.X_AXIS ) );
+		otherOptions.add( new JLabel("Scale: ") );
+		otherOptions.add( scaleCombo );
 		otherOptions.add( new JLabel("Random seed: ") );
 		otherOptions.add( randomSeedField );
 
@@ -84,7 +90,8 @@ public class SharedPanel extends JPanel {
                     (MIDIPitch) lowPitchField.getSelectedItem(),
                     (MIDIPitch) highPitchField.getSelectedItem(),
                     (Duration) shortLengthCombo.getSelectedItem(),
-                    (Duration) longLengthCombo.getSelectedItem()
+                    (Duration) longLengthCombo.getSelectedItem(),
+                    (ScaleType) scaleCombo.getSelectedItem()
                     );
         }
 	
