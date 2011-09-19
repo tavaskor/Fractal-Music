@@ -9,13 +9,13 @@ import java.util.LinkedList;
 
 public class MIDISequenceCreator implements Runnable {
 	public MIDISequenceCreator(NoteGenerator noteGen) 
-	throws InvalidMidiDataException, IllegalNoteLengthException, MidiUnavailableException {
+	throws InvalidMidiDataException, MidiUnavailableException {
 		gen = noteGen;
 		
 		// Initialize variables used by both this class and the inner class's thread.
 		seqer = javax.sound.midi.MidiSystem.getSequencer();
 		seqer.open();
-		seq = new Sequence(Sequence.PPQ, Converter.TICKS_PER_QUARTER_NOTE, 1); 
+		seq = new Sequence(Sequence.PPQ, TICKS_PER_QUARTER_NOTE, 1); 
 		Track[] trackList = seq.getTracks();
 		editTrack = trackList[0];
 	}
@@ -25,6 +25,7 @@ public class MIDISequenceCreator implements Runnable {
 		finished = true;
 	}
 	
+    @Override
 	public void run() {
 		// Start the NoteAdder to populate the MIDI sequence.
 		NoteAdder na = new NoteAdder();
@@ -66,7 +67,7 @@ public class MIDISequenceCreator implements Runnable {
 				System.err.println("Loop " + seqer.getTickPosition());
 				try {
 					while ((seqer.getTickPosition() - bert.getTick()) 
-							< 2 * Converter.noteLengthToMIDITicks(1)) {
+							< 2 * durationToMIDITicks(Duration.WHOLE)) {
 						Thread.sleep(150);
 					}
 					continueLoop = false;
@@ -94,7 +95,7 @@ public class MIDISequenceCreator implements Runnable {
 	private Track editTrack;
 	private NoteGenerator gen;
 	private Queue<MidiEvent> eventTrack = new LinkedList<MidiEvent>();
-	private Object lockProtector = new Object();
+	private final Object lockProtector = new Object();
 
 	
 	private class NoteAdder implements Runnable {
@@ -110,7 +111,7 @@ public class MIDISequenceCreator implements Runnable {
 		// in the MIDI sequence.
 		private void addNotes() {
 			try {
-				while ( (adderPosition - seqer.getTickPosition()) < 10 * Converter.noteLengthToMIDITicks(1)) {
+				while ( (adderPosition - seqer.getTickPosition()) < 10 * durationToMIDITicks(Duration.WHOLE)) {
 					addANote();
 				}
 			}
@@ -130,8 +131,8 @@ public class MIDISequenceCreator implements Runnable {
 					DEFAULT_VELOCITY);
 			MidiEvent meep = new MidiEvent(noteOn, adderPosition);
 
-			int length = toAdd.getDuration().getNumericDenominator();
-			adderPosition += Converter.noteLengthToMIDITicks(length);
+			Duration length = toAdd.getDuration();
+			adderPosition += durationToMIDITicks(length);
 			
 			ShortMessage noteOff = new ShortMessage();
 			noteOff.setMessage(ShortMessage.NOTE_OFF, 1, pitch,
@@ -149,6 +150,7 @@ public class MIDISequenceCreator implements Runnable {
 					+ moop.getMessage() + ", " + moop.getTick() + " ...");
 		}
 		
+        @Override
 		public void run() {
 			while (!MIDISequenceCreator.this.finished) {
 				try {
@@ -164,4 +166,21 @@ public class MIDISequenceCreator implements Runnable {
 			t.start();
 		}
 	}
+        
+        
+    private static final int TICKS_PER_QUARTER_NOTE = 64;
+    
+    private static int durationToMIDITicks(Duration noteLength) {
+        final int tpqn = TICKS_PER_QUARTER_NOTE;
+        switch(noteLength) {
+            case WHOLE: return tpqn * 4;
+            case HALF: return tpqn * 2;
+            case QUARTER: return tpqn;
+            case EIGHTH: return (int) (tpqn / 2);
+            case SIXTEENTH: return (int) (tpqn / 4);
+            case THIRTY_SECOND: return (int) (tpqn / 8);
+            case SIXTY_FOURTH: return (int) (tpqn / 16);
+            default: return (int) (tpqn / 32);
+        }
+    }
 }
