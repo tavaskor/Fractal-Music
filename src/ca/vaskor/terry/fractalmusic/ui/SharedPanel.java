@@ -1,11 +1,15 @@
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.ui;
 
 import javax.swing.*;
 import java.awt.GridLayout;
-import java.lang.NumberFormatException;
 
 import java.util.List;
-import java.util.Arrays;
+
+
+import ca.vaskor.terry.fractalmusic.lib.NoteRangeRestrictor;
+import ca.vaskor.terry.fractalmusic.lib.Duration;
+import ca.vaskor.terry.fractalmusic.lib.MIDIPitch;
+import ca.vaskor.terry.fractalmusic.lib.ScaleType;
 
 /**
  * 

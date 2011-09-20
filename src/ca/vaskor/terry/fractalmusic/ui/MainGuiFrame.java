@@ -8,7 +8,7 @@
  *
  * Created on Sep 13, 2011, 12:55:55 PM
  */
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.ui;
 
 /**
  *

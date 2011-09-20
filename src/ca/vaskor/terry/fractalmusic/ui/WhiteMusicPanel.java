@@ -2,7 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.ui;
+
+import ca.vaskor.terry.fractalmusic.lib.NoteRangeRestrictor;
+import ca.vaskor.terry.fractalmusic.lib.NoteGenerator;
+import ca.vaskor.terry.fractalmusic.lib.WhiteNoteGenerator;
 
 /**
  *
@@ -15,6 +19,6 @@ public class WhiteMusicPanel extends MusicPanel {
     
     @Override
     public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, long randomSeed) {
-        return new WhiteNoiseGenerator(nrr, randomSeed);
+        return new WhiteNoteGenerator(nrr, randomSeed);
     }
 }

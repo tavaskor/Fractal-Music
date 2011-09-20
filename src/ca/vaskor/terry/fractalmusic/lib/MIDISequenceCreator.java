@@ -1,4 +1,4 @@
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.lib;
 
 import javax.sound.midi.*;
 
@@ -47,7 +47,7 @@ public class MIDISequenceCreator implements Runnable {
 		System.err.println("Boogah");
 	}
 
-	void playSequence() {
+	public void playSequence() {
 		Thread t = new Thread(this);
 		t.start();
 	}

@@ -2,12 +2,17 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.ui;
 
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
+
+
+import ca.vaskor.terry.fractalmusic.lib.NoteRangeRestrictor;
+import ca.vaskor.terry.fractalmusic.lib.NoteGenerator;
+import ca.vaskor.terry.fractalmusic.lib.ReflectingBrownNoteGenerator;
 
 /**
  *
@@ -34,7 +39,7 @@ public class BrownMusicPanel extends MusicPanel {
     public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, long randomSeed) {
         int pitchDiff = (Integer) pitchSpread.getSelectedItem();
         int lengthDiff = (Integer) lengthSpread.getSelectedItem();
-        return new ReflectingBrownNoiseGenerator(nrr, randomSeed, 
+        return new ReflectingBrownNoteGenerator(nrr, randomSeed, 
                     -pitchDiff, pitchDiff, -lengthDiff, lengthDiff);
     }
     

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.ui;
 
 import javax.swing.JRadioButton;
 import java.awt.BorderLayout;

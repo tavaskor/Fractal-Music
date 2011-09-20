@@ -1,4 +1,4 @@
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.ui;
 
 import javax.swing.JApplet;
 

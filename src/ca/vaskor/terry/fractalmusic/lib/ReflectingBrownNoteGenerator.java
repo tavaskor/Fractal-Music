@@ -1,7 +1,7 @@
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.lib;
 
-public class ReflectingBrownNoiseGenerator extends BrownNoiseGenerator {
-    public ReflectingBrownNoiseGenerator(
+public class ReflectingBrownNoteGenerator extends BrownNoteGenerator {
+    public ReflectingBrownNoteGenerator(
             NoteRangeRestrictor nrr, long randomSeed,
             int lowestPitchChange, int highestPitchChange,
             int lowestLengthStep, int highestLengthStep) {

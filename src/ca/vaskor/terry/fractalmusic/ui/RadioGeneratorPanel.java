@@ -1,10 +1,13 @@
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.ui;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.util.ArrayList;
+
+import ca.vaskor.terry.fractalmusic.lib.NoteRangeRestrictor;
+import ca.vaskor.terry.fractalmusic.lib.NoteGenerator;
 
 /**
  * @author Terry

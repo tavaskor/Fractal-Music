@@ -1,7 +1,7 @@
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.lib;
 
-public class WhiteNoiseGenerator extends RandomizedNoteGenerator implements NoteGenerator {
-    public WhiteNoiseGenerator(NoteRangeRestrictor nrr, long randomSeed) {
+public class WhiteNoteGenerator extends RandomizedNoteGenerator implements NoteGenerator {
+    public WhiteNoteGenerator(NoteRangeRestrictor nrr, long randomSeed) {
         super(nrr, randomSeed);
     }
     

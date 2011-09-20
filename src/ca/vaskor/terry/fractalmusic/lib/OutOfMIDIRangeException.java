@@ -1,4 +1,4 @@
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.lib;
 
 public class OutOfMIDIRangeException extends Exception {
     private static final long serialVersionUID = 5362073644721848311L;

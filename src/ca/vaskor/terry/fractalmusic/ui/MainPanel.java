@@ -1,8 +1,10 @@
-package ca.vaskor.terry.fractalmusic;
+package ca.vaskor.terry.fractalmusic.ui;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
-import java.lang.NumberFormatException;
+
+import ca.vaskor.terry.fractalmusic.lib.NoteGenerator;
+import ca.vaskor.terry.fractalmusic.lib.MIDISequenceCreator;
 
 public class MainPanel extends JPanel implements java.awt.event.ActionListener {
 	/**
@@ -30,6 +32,7 @@ public class MainPanel extends JPanel implements java.awt.event.ActionListener {
 	// The button has been pressed.
 	// Either halt the playing of the MIDI music, or generate a new sequence
 	// and play it.
+    @Override
 	public void actionPerformed(java.awt.event.ActionEvent event) {
 		if (this.currentlyPlayingMIDI) {
 			msc.haltExecution();
