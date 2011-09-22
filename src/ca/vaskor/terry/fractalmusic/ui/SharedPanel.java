@@ -43,14 +43,16 @@ public class SharedPanel extends JPanel {
 	
 	public SharedPanel() {
 		// Add appropriate subsections to this Panel
-		this.setLayout( new GridLayout(3, 1) );
+		this.setLayout( new GridLayout(4, 1) );
 		
 		JPanel pitchOptions = new JPanel();
-		JPanel lengthOptions = new JPanel();		
+		JPanel lengthOptions = new JPanel();	
+                JPanel scaleOptions = new JPanel();
 		JPanel otherOptions = new JPanel();
 		
 		this.add(pitchOptions);
 		this.add(lengthOptions);
+                this.add(scaleOptions);
 		this.add(otherOptions);
 		
 		// Now Set up private fields
@@ -70,9 +72,11 @@ public class SharedPanel extends JPanel {
 		
 		// And then add these private fields to the proper subsections of the panel.
 
+                scaleOptions.setLayout( new BoxLayout( scaleOptions, BoxLayout.X_AXIS ) );
+		scaleOptions.add( new JLabel("Scale: ") );
+		scaleOptions.add( scaleCombo );
+                
 		otherOptions.setLayout( new BoxLayout( otherOptions, BoxLayout.X_AXIS ) );
-		otherOptions.add( new JLabel("Scale: ") );
-		otherOptions.add( scaleCombo );
 		otherOptions.add( new JLabel("Random seed: ") );
 		otherOptions.add( randomSeedField );
 
