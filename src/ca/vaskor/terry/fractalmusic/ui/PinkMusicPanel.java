@@ -21,7 +21,7 @@ public class PinkMusicPanel extends MusicPanel {
     public PinkMusicPanel(javax.swing.ButtonGroup radioGroup, boolean buttonSelected) {
         super("Pink music", radioGroup, buttonSelected);
         
-        JPanel pinkMusicRest = new JPanel();
+        JPanel pinkMusicRest = new RecursiveEnableJPanel();
         this.add( pinkMusicRest, BorderLayout.CENTER );
         numPitchDice = new JComboBox(pinkPitchDiceOptions);
         numLengthDice = new JComboBox(pinkLengthDiceOptions);

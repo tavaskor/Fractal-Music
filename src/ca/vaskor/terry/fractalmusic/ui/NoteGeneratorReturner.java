@@ -7,6 +7,6 @@ import ca.vaskor.terry.fractalmusic.lib.NoteGenerator;
  * @author Terry Vaskor
  *
  */
-public abstract class NoteGeneratorReturner extends javax.swing.JPanel {
+public abstract class NoteGeneratorReturner extends RecursiveEnableJPanel {
 	public abstract NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, long randomSeed);
 }

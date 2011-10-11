@@ -24,7 +24,7 @@ import ca.vaskor.terry.fractalmusic.lib.ScaleType;
  * @author Terry Vaskor
  *
  */
-public class SharedPanel extends JPanel {
+public class SharedPanel extends RecursiveEnableJPanel {
 	private static final long serialVersionUID = 6273677888021571673L;
 
 	private JComboBox lowPitchField;
@@ -45,10 +45,10 @@ public class SharedPanel extends JPanel {
 		// Add appropriate subsections to this Panel
 		this.setLayout( new GridLayout(4, 1) );
 		
-		JPanel pitchOptions = new JPanel();
-		JPanel lengthOptions = new JPanel();	
-                JPanel scaleOptions = new JPanel();
-		JPanel otherOptions = new JPanel();
+		JPanel pitchOptions = new RecursiveEnableJPanel();
+		JPanel lengthOptions = new RecursiveEnableJPanel();	
+                JPanel scaleOptions = new RecursiveEnableJPanel();
+		JPanel otherOptions = new RecursiveEnableJPanel();
 		
 		this.add(pitchOptions);
 		this.add(lengthOptions);

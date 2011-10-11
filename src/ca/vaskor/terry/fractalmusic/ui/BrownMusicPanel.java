@@ -23,7 +23,7 @@ public class BrownMusicPanel extends MusicPanel {
     public BrownMusicPanel(javax.swing.ButtonGroup radioGroup, boolean buttonSelected) {
         super("Brown music", radioGroup, buttonSelected);
         
-        JPanel brownMusicRest = new JPanel();
+        JPanel brownMusicRest = new RecursiveEnableJPanel();
         this.add( brownMusicRest, BorderLayout.CENTER );
         pitchSpread = new JComboBox(brownSpreadOptions);
         lengthSpread = new JComboBox(brownSpreadOptions);
