@@ -89,8 +89,6 @@ public class MainPanel extends RecursiveEnableJPanel  {
     private class ButtonListener implements java.awt.event.ActionListener {
         @Override
         public void actionPerformed(java.awt.event.ActionEvent event) {
-            generateCommand.toggle();
-
             if (currentlyPlayingMIDI) {
                 // Stop execution of the music
                 msc.haltExecution();
@@ -98,6 +96,8 @@ public class MainPanel extends RecursiveEnableJPanel  {
                 // Restore the UI to a state where it accepts user input.
                 currentlyPlayingMIDI = false;
                 disableMaster.setEnabled(true);
+                
+                generateCommand.toggle();
 
                 return;
             }
@@ -126,6 +126,7 @@ public class MainPanel extends RecursiveEnableJPanel  {
                 // and only has the option to stop the music.
                 currentlyPlayingMIDI = true;
                 disableMaster.setEnabled(false);
+                generateCommand.toggle();
 
                 // TODO: Launch a new window.
                 // TODO: Give it the same parameters as the current window!?
