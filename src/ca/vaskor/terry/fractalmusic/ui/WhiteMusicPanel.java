@@ -18,7 +18,7 @@ public class WhiteMusicPanel extends MusicPanel {
     }
     
     @Override
-    public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, long randomSeed) {
+    public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, Long randomSeed) {
         return new WhiteNoteGenerator(nrr, randomSeed);
     }
 }

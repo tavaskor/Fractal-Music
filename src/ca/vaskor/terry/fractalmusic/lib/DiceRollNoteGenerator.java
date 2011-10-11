@@ -4,7 +4,7 @@ import java.util.Vector;
 import java.util.List;
 
 public abstract class DiceRollNoteGenerator implements NoteGenerator {
-	public DiceRollNoteGenerator(NoteRangeRestrictor restrictor, int numPitchDice, int numDiceSides, int numLengthDice, int numLengthSides, long randomSeed) {
+	public DiceRollNoteGenerator(NoteRangeRestrictor restrictor, int numPitchDice, int numDiceSides, int numLengthDice, int numLengthSides, Long randomSeed) {
 		createDice(numPitchDice, numLengthDice);
 
 		for (int i = 0; i < numPitchDice; i++) {
@@ -16,12 +16,15 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
 			lengthDiceRollCheck.set(i, 1);
 		}
 
-		randGen = new java.util.Random(randomSeed);
+		randGen = new java.util.Random();
+                if (randomSeed != null) {
+                    randGen.setSeed(randomSeed);
+                }
                 
                 nrr = restrictor;
 	}
 
-	public DiceRollNoteGenerator(NoteRangeRestrictor restrictor, List<? extends Integer> numSidesPerPitchDice, List<? extends Integer> numSidesPerLengthDice, long randomSeed) {
+	public DiceRollNoteGenerator(NoteRangeRestrictor restrictor, List<? extends Integer> numSidesPerPitchDice, List<? extends Integer> numSidesPerLengthDice, Long randomSeed) {
 		int numPitchDice = numSidesPerPitchDice.size();
 		int numLengthDice = numSidesPerLengthDice.size();
 		createDice(numPitchDice, numLengthDice);
@@ -35,7 +38,11 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
 			lengthDiceRollCheck.set(i, 1);
 		}
 
-		randGen = new java.util.Random(randomSeed);
+
+		randGen = new java.util.Random();
+                if (randomSeed != null) {
+                    randGen.setSeed(randomSeed);
+                }
                 
                 nrr = restrictor;
 	}

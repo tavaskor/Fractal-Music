@@ -9,16 +9,26 @@ import ca.vaskor.terry.fractalmusic.lib.MIDISequenceCreator;
 public class MainPanel extends RecursiveEnableJPanel  {
     
     private static final long serialVersionUID = 7274657133880441695L;
+    private static final int PANEL_PADDING = 5;
     
     public MainPanel() {
         super();
         this.setLayout(new BorderLayout());
         
-        this.add(generateCommand, BorderLayout.SOUTH);
+        this.add(buttonContainer, BorderLayout.SOUTH);
         this.add(disableMaster, BorderLayout.CENTER);    
         
         layoutMainPanel();
+        layoutButtonPanel();
         generateCommand.addActionListener(new ButtonListener());
+    }
+    
+    private void layoutButtonPanel() {
+        buttonContainer.setLayout(
+                new java.awt.GridLayout(2, 0, PANEL_PADDING, PANEL_PADDING)
+                );
+        buttonContainer.add(forkCommand);
+        buttonContainer.add(generateCommand);
     }
         
     private void layoutMainPanel() {
@@ -29,7 +39,6 @@ public class MainPanel extends RecursiveEnableJPanel  {
         disableMaster.add(this.sharedOpts);
         
         
-        final int PANEL_PADDING = 5;
         
         // Put the NoteGeneratorReturner at the top of the panel,
         // centred horizontally.
@@ -103,7 +112,7 @@ public class MainPanel extends RecursiveEnableJPanel  {
             }
 
             // Read all of the general options.
-            long randomSeed;
+            Long randomSeed;
             try {
                 randomSeed = sharedOpts.getRandomSeed();
             } catch (NumberFormatException e) {
@@ -127,10 +136,6 @@ public class MainPanel extends RecursiveEnableJPanel  {
                 currentlyPlayingMIDI = true;
                 disableMaster.setEnabled(false);
                 generateCommand.toggle();
-
-                // TODO: Launch a new window.
-                // TODO: Give it the same parameters as the current window!?
-                MainGuiFrame.main(new String[]{});
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(disableMaster, "MIDI Error:\n" + e.toString());
             }
@@ -143,5 +148,8 @@ public class MainPanel extends RecursiveEnableJPanel  {
     private JPanel disableMaster = new RecursiveEnableJPanel();
     private SharedPanel sharedOpts = new SharedPanel();
     private NoteGeneratorReturner ngr = new RadioGeneratorPanel();
+    
+    private JPanel buttonContainer = new JPanel();
     private MusicToggleButton generateCommand = new MusicToggleButton();
+    private ForkWindowButton forkCommand = new ForkWindowButton();
 }

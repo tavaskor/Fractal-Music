@@ -33,6 +33,7 @@ public class SharedPanel extends RecursiveEnableJPanel {
 	private JComboBox shortLengthCombo;
 	private JComboBox scaleCombo;
 	
+        private JCheckBox randomSeedEnable;
 	private JTextField randomSeedField;
 	
 	private static final List<Duration> durations =
@@ -61,7 +62,10 @@ public class SharedPanel extends RecursiveEnableJPanel {
 		longLengthCombo = new JComboBox(durations.toArray());
 		shortLengthCombo = new JComboBox(durations.toArray());
                 scaleCombo = new JComboBox(ScaleType.values());
+                
+                randomSeedEnable = new JCheckBox("Random seed: ");
 		randomSeedField = new JTextField("12345", 10);
+                randomSeedEnable.setSelected(false);
 
 		lowPitchField.setSelectedIndex(32);
 		highPitchField.setSelectedIndex(96);
@@ -77,7 +81,7 @@ public class SharedPanel extends RecursiveEnableJPanel {
 		scaleOptions.add( scaleCombo );
                 
 		otherOptions.setLayout( new BoxLayout( otherOptions, BoxLayout.X_AXIS ) );
-		otherOptions.add( new JLabel("Random seed: ") );
+		otherOptions.add( randomSeedEnable );
 		otherOptions.add( randomSeedField );
 
 		pitchOptions.setLayout( new BoxLayout( pitchOptions, BoxLayout.X_AXIS ) );
@@ -104,6 +108,10 @@ public class SharedPanel extends RecursiveEnableJPanel {
         }
 	
 	public Long getRandomSeed() throws NumberFormatException {
-		return new Long(randomSeedField.getText());
+            if (randomSeedEnable.isSelected()) {
+                return new Long(randomSeedField.getText());
+            } else {
+                return null;
+            }
 	}
 }
