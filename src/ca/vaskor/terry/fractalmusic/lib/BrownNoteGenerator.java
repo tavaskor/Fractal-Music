@@ -1,12 +1,13 @@
 package ca.vaskor.terry.fractalmusic.lib;
 
-public abstract class BrownNoteGenerator extends RandomizedNoteGenerator implements NoteGenerator {
+public abstract class BrownNoteGenerator implements NoteGenerator {
     public BrownNoteGenerator(
-            NoteRangeRestrictor overallRange, java.util.Random randGen, 
+            NoteRangeRestrictor nrr,
             int lowPitchChange, int highPitchChange, 
             int lowLengthStep, int highLengthStep
             ) {
-        super(overallRange, randGen);
+        restrictor = nrr;
+        
         lowPC = lowPitchChange;
         highPC = highPitchChange;
         lowLC = lowLengthStep;
@@ -42,4 +43,6 @@ public abstract class BrownNoteGenerator extends RandomizedNoteGenerator impleme
     private int highPC;
     private int lowLC;
     private int highLC;
+    
+    private NoteRangeRestrictor restrictor;
 }

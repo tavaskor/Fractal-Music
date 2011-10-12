@@ -5,8 +5,11 @@ public class ReflectingBrownNoteGenerator extends BrownNoteGenerator {
             NoteRangeRestrictor nrr, java.util.Random randGen,
             int lowestPitchChange, int highestPitchChange,
             int lowestLengthStep, int highestLengthStep) {
-        super(nrr, randGen, lowestPitchChange, highestPitchChange, 
-                lowestLengthStep, highestLengthStep);
+        super(
+                nrr, lowestPitchChange, highestPitchChange, 
+                lowestLengthStep, highestLengthStep
+                );
+        gen = randGen;
     }
     
     @Override
@@ -14,7 +17,7 @@ public class ReflectingBrownNoteGenerator extends BrownNoteGenerator {
             int startVal, int maxNegChange, int maxPosChange, int maxVal
             ) {
         int minVal = 0;
-        int changeAmount = getNextInt(maxPosChange - maxNegChange + 1) + maxNegChange;
+        int changeAmount = gen.nextInt(maxPosChange - maxNegChange + 1) + maxNegChange;
         int newVal = startVal + changeAmount;
         if ( (newVal < minVal) || (newVal > maxVal) ) {
             newVal = startVal - changeAmount;
@@ -25,4 +28,6 @@ public class ReflectingBrownNoteGenerator extends BrownNoteGenerator {
 
         return newVal;
     }	
+    
+    private java.util.Random gen;
 }
