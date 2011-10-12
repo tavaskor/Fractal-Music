@@ -25,7 +25,7 @@ public class MainPanel extends RecursiveEnableJPanel  {
     
     private void layoutButtonPanel() {
         buttonContainer.setLayout(
-                new java.awt.GridLayout(2, 0, PANEL_PADDING, PANEL_PADDING)
+                new java.awt.GridLayout(0, 1, PANEL_PADDING, PANEL_PADDING)
                 );
         buttonContainer.add(forkCommand);
         buttonContainer.add(generateCommand);
@@ -141,8 +141,10 @@ public class MainPanel extends RecursiveEnableJPanel  {
                 currentlyPlayingMIDI = true;
                 disableMaster.setEnabled(false);
                 generateCommand.toggle();
-            } catch (Exception e) {
+            } catch (javax.sound.midi.InvalidMidiDataException e) {
                 JOptionPane.showMessageDialog(disableMaster, "MIDI Error:\n" + e.toString());
+            } catch (javax.sound.midi.MidiUnavailableException e) {
+                JOptionPane.showMessageDialog(disableMaster, "MIDI is not available:\n" + e.toString());
             }
         }
     }
