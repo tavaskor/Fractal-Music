@@ -151,5 +151,5 @@ public class MainPanel extends RecursiveEnableJPanel  {
     
     private JPanel buttonContainer = new JPanel();
     private MusicToggleButton generateCommand = new MusicToggleButton();
-    private ForkWindowButton forkCommand = new ForkWindowButton();
+    private ForkWindowButton forkCommand = new ForkWindowButton(sharedOpts);
 }
