@@ -8,5 +8,5 @@ import ca.vaskor.terry.fractalmusic.lib.NoteGenerator;
  *
  */
 public abstract class NoteGeneratorReturner extends RecursiveEnableJPanel {
-	public abstract NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, Long randomSeed);
+	public abstract NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, java.util.Random randGen);
 }

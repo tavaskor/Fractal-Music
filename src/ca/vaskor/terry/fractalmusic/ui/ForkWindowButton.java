@@ -4,8 +4,6 @@
  */
 package ca.vaskor.terry.fractalmusic.ui;
 
-import java.awt.Point;
-
 /**
  *
  * @author tavaskor

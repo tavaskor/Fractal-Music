@@ -2,10 +2,10 @@ package ca.vaskor.terry.fractalmusic.lib;
 
 public class ReflectingBrownNoteGenerator extends BrownNoteGenerator {
     public ReflectingBrownNoteGenerator(
-            NoteRangeRestrictor nrr, Long randomSeed,
+            NoteRangeRestrictor nrr, java.util.Random randGen,
             int lowestPitchChange, int highestPitchChange,
             int lowestLengthStep, int highestLengthStep) {
-        super(nrr, randomSeed, lowestPitchChange, highestPitchChange, 
+        super(nrr, randGen, lowestPitchChange, highestPitchChange, 
                 lowestLengthStep, highestLengthStep);
     }
     

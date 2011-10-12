@@ -42,10 +42,10 @@ public class RadioGeneratorPanel extends NoteGeneratorReturner {
 	 */
 	@Override
 	public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr,
-			Long randomSeed) {
+			java.util.Random randGen) {
             for (MusicPanel mp : musicPanels) {
                 if (mp.buttonIsSelected()) {
-                    return mp.getNoteGenerator(nrr, randomSeed);
+                    return mp.getNoteGenerator(nrr, randGen);
                 }
             }
             

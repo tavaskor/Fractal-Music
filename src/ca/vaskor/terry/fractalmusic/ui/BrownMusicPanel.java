@@ -36,10 +36,10 @@ public class BrownMusicPanel extends MusicPanel {
     }
     
     @Override
-    public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, Long randomSeed) {
+    public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, java.util.Random randGen) {
         int pitchDiff = (Integer) pitchSpread.getSelectedItem();
         int lengthDiff = (Integer) lengthSpread.getSelectedItem();
-        return new ReflectingBrownNoteGenerator(nrr, randomSeed, 
+        return new ReflectingBrownNoteGenerator(nrr, randGen, 
                     -pitchDiff, pitchDiff, -lengthDiff, lengthDiff);
     }
     

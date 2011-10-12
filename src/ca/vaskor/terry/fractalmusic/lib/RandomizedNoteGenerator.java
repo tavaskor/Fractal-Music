@@ -1,18 +1,15 @@
 package ca.vaskor.terry.fractalmusic.lib;
 
 public class RandomizedNoteGenerator {
-	public RandomizedNoteGenerator(NoteRangeRestrictor nrr, Long randomSeed) {
+	public RandomizedNoteGenerator(NoteRangeRestrictor nrr, java.util.Random randGen) {
 		restrictor = nrr;
-		randGen = new java.util.Random();
-                if (randomSeed != null) {
-                    randGen.setSeed(randomSeed);
-                }
+                gen = randGen;
 	}
 
 	protected int getNextInt(int maxPlusOne) {
-		return randGen.nextInt(maxPlusOne);
+		return gen.nextInt(maxPlusOne);
 	}
 
 	protected NoteRangeRestrictor restrictor;
-	private java.util.Random randGen;
+	private java.util.Random gen;
 }

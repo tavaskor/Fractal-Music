@@ -1,8 +1,8 @@
 package ca.vaskor.terry.fractalmusic.lib;
 
 public class WhiteNoteGenerator extends RandomizedNoteGenerator implements NoteGenerator {
-    public WhiteNoteGenerator(NoteRangeRestrictor nrr, Long randomSeed) {
-        super(nrr, randomSeed);
+    public WhiteNoteGenerator(NoteRangeRestrictor nrr, java.util.Random randGen) {
+        super(nrr, randGen);
     }
     
     @Override

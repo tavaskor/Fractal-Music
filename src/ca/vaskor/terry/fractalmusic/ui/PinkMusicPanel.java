@@ -35,10 +35,10 @@ public class PinkMusicPanel extends MusicPanel {
     }
     
     @Override
-    public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, Long randomSeed) {
+    public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, java.util.Random randGen) {
         int pitchDice = (Integer) numPitchDice.getSelectedItem();
         int lengthDice = (Integer) numLengthDice.getSelectedItem();
-        return new AdditiveNoteGenerator(nrr, pitchDice, lengthDice, randomSeed);
+        return new AdditiveNoteGenerator(nrr, pitchDice, lengthDice, randGen);
     }
     
     private JComboBox numPitchDice;

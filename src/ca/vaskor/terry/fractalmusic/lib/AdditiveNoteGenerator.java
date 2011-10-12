@@ -42,12 +42,16 @@ public class AdditiveNoteGenerator extends DiceRollNoteGenerator {
 		return sum;
 	}
 
-        public AdditiveNoteGenerator(NoteRangeRestrictor nrr, int numberOfPitchDice, int numberOfLengthDice, Long randomSeed) {
+        public AdditiveNoteGenerator(
+                NoteRangeRestrictor nrr, 
+                int numberOfPitchDice, int numberOfLengthDice, 
+                java.util.Random randGen
+                ) {
             super(
                     nrr,
-                    determineDiceSides( nrr.getNumPitches(), numberOfPitchDice),
-                    determineDiceSides( nrr.getNumDurations(), numberOfLengthDice),
-                    randomSeed
+                    determineDiceSides(nrr.getNumPitches(), numberOfPitchDice),
+                    determineDiceSides(nrr.getNumDurations(), numberOfLengthDice),
+                    randGen
                     );
 	}
 

@@ -119,10 +119,15 @@ public class MainPanel extends RecursiveEnableJPanel  {
                 JOptionPane.showMessageDialog(sharedOpts, "Random seed must be a properly formatted long integer");
                 return;
             }
+            
+            java.util.Random randGen = new java.util.Random();
+            if (randomSeed != null) {
+                randGen.setSeed(randomSeed);
+            }
 
             NoteGenerator ng = ngr.getNoteGenerator(
                     sharedOpts.getNoteRangeRestrictor(),
-                    randomSeed
+                    randGen
                     );
 
             try {
