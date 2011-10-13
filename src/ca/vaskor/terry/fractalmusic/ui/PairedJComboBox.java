@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class PairedJComboBox extends javax.swing.JComboBox {    
     public PairedJComboBox(Object[] items) {
         super(items);
-        fullList = Arrays.asList(items);
+        fullList = items;
         highestRenderedIndex = items.length - 1;
         
         addItemListener(new ItemListener() {
@@ -68,12 +68,12 @@ public class PairedJComboBox extends javax.swing.JComboBox {
         // Redo the list given that information
         removeAllItems();
         for (int i = lowestRenderedIndex; i <= highestRenderedIndex; i++) {
-            addItem(fullList.get(i));
+            addItem(fullList[i]);
         }
 
         // Use currentGlobalSelectedIndex to calculate what selected index should be.
         // If this is still being initialized, this will cause an exception;
-        // disregard it.
+        // disregard it as the correct thing will be done each future call.
         try {
             this.setSelectedIndex(currentGlobalSelectedIndex - lowestRenderedIndex);
         } catch (java.lang.IllegalArgumentException exn) {
@@ -90,5 +90,5 @@ public class PairedJComboBox extends javax.swing.JComboBox {
     int highestRenderedIndex;
     boolean isHigher;
     
-    java.util.List<Object> fullList;
+    Object[] fullList;
 }
