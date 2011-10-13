@@ -11,8 +11,11 @@ public class MainPanel extends RecursiveEnableJPanel  {
     private static final long serialVersionUID = 7274657133880441695L;
     private static final int PANEL_PADDING = 5;
     
-    public MainPanel() {
+    public MainPanel(SharedPanelData dat) {
         super();
+        sharedOpts = new SharedPanel(dat);
+        forkCommand = new ForkWindowButton(sharedOpts, sharedOpts);
+        
         this.setLayout(new BorderLayout());
         
         this.add(buttonContainer, BorderLayout.SOUTH);
@@ -153,10 +156,10 @@ public class MainPanel extends RecursiveEnableJPanel  {
     private MIDISequenceCreator msc;
     
     private JPanel disableMaster = new RecursiveEnableJPanel();
-    private SharedPanel sharedOpts = new SharedPanel();
+    private SharedPanel sharedOpts;
     private NoteGeneratorReturner ngr = new RadioGeneratorPanel();
     
     private JPanel buttonContainer = new JPanel();
     private MusicToggleButton generateCommand = new MusicToggleButton();
-    private ForkWindowButton forkCommand = new ForkWindowButton(sharedOpts);
+    private ForkWindowButton forkCommand;
 }

@@ -11,7 +11,10 @@ package ca.vaskor.terry.fractalmusic.ui;
 public class ForkWindowButton extends javax.swing.JButton {
     private static final int X_DISPLACEMENT = 15;
     
-    public ForkWindowButton(final javax.swing.JComponent relativeTo) {
+    public ForkWindowButton(
+            final javax.swing.JComponent relativeTo,
+            final SharedPanel panelToMonitor
+            ) {
         super("Create New Window");
         addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -20,7 +23,7 @@ public class ForkWindowButton extends javax.swing.JButton {
                 // Make it slightly down and to the right from the bounds of
                 // the parent window.
                 // TODO: Give it the same parameters as the current window!?
-                final MainGuiFrame newFrame = new MainGuiFrame();
+                final MainGuiFrame newFrame = new MainGuiFrame(panelToMonitor.getData());
                 newFrame.setLocationRelativeTo(relativeTo);
                 
                 java.awt.Point intermediateLocation = newFrame.getLocation();

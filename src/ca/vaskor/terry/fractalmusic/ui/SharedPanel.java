@@ -27,23 +27,28 @@ import ca.vaskor.terry.fractalmusic.lib.ScaleType;
  */
 public class SharedPanel extends RecursiveEnableJPanel {
 	private static final long serialVersionUID = 6273677888021571673L;
-
-	private PairedJComboBox lowPitchField;
-	private PairedJComboBox highPitchField;
-	private PairedJComboBox longLengthCombo;
-	private PairedJComboBox shortLengthCombo;
-	private JComboBox scaleCombo;
-	
-        private JCheckBox randomSeedEnable;
-	private JTextField randomSeedField;
 	
 	private static final List<Duration> durations =
                 Duration.getRange(Duration.LOWEST_DURATION, Duration.HIGHEST_DURATION);
                 
         private static final List<MIDIPitch> pitches= 
                 MIDIPitch.getRange(MIDIPitch.LOWEST_PITCH, MIDIPitch.HIGHEST_PITCH);
+
+	private PairedJComboBox lowPitchField = 
+                new PairedJComboBox(pitches.toArray());
+	private PairedJComboBox highPitchField = 
+                new PairedJComboBox(pitches.toArray());
+	private PairedJComboBox longLengthCombo = 
+                new PairedJComboBox(durations.toArray());
+	private PairedJComboBox shortLengthCombo = 
+                new PairedJComboBox(durations.toArray());
+	private JComboBox scaleCombo = 
+                new JComboBox(ScaleType.values());
 	
-	public SharedPanel() {
+        private JCheckBox randomSeedEnable = new JCheckBox("Random seed: ");
+	private JTextField randomSeedField;
+	
+	public SharedPanel(SharedPanelData settings) {
 		// Add appropriate subsections to this Panel
 		this.setLayout( new GridLayout(4, 1) );
 		
@@ -57,32 +62,11 @@ public class SharedPanel extends RecursiveEnableJPanel {
                 this.add(scaleOptions);
 		this.add(otherOptions);
 		
-		// Now Set up private fields
-		lowPitchField = new PairedJComboBox(pitches.toArray());
-		highPitchField = new PairedJComboBox(pitches.toArray());
-		longLengthCombo = new PairedJComboBox(durations.toArray());
-		shortLengthCombo = new PairedJComboBox(durations.toArray());
-                scaleCombo = new JComboBox(ScaleType.values());
+		// Now initialize values of the GUI fields
                 
-                lowPitchField.pairWithHigher(highPitchField);
-                shortLengthCombo.pairWithHigher(longLengthCombo);
-                
-                randomSeedEnable = new JCheckBox("Random seed: ");
-		randomSeedField = new JTextField("12345", 10);
-                randomSeedEnable.setSelected(false);
-
-                try {
-                    lowPitchField.setSelectedItem(MIDIPitch.getMIDIPitch(PitchName.G_SHARP, 2));
-                    highPitchField.setSelectedItem(MIDIPitch.getMIDIPitch(PitchName.C, 8));
-                } catch (ca.vaskor.terry.fractalmusic.lib.OutOfMIDIRangeException exn) {
-                    throw new Error("Code error: Hardcoded MIDI value out of range!");
-                }
-		longLengthCombo.setSelectedItem(Duration.QUARTER);
-		shortLengthCombo.setSelectedItem(Duration.SIXTEENTH);
-                scaleCombo.setSelectedIndex(0);
-
+                initializeFields(settings);
 		
-		// And then add these private fields to the proper subsections of the panel.
+		// And then add these fields to the proper subsections of the panel.
 
                 scaleOptions.setLayout( new BoxLayout( scaleOptions, BoxLayout.X_AXIS ) );
 		scaleOptions.add( new JLabel("Scale: ") );
@@ -104,14 +88,47 @@ public class SharedPanel extends RecursiveEnableJPanel {
 		lengthOptions.add( new JLabel("Longest length: ") );
 		lengthOptions.add(longLengthCombo);
 	}
+        
+        private void initializeFields(SharedPanelData settings) {
+            lowPitchField.pairWithHigher(highPitchField);
+            shortLengthCombo.pairWithHigher(longLengthCombo);
+            
+            if (settings == null) {
+                try {
+                    initializeFields(
+                            new SharedPanelData(
+                                    MIDIPitch.getMIDIPitch(PitchName.G_SHARP, 2),
+                                    MIDIPitch.getMIDIPitch(PitchName.C, 8),
+                                    Duration.SIXTEENTH,
+                                    Duration.QUARTER,
+                                    ScaleType.CHROMATIC,
+                                    "12345",
+                                    false
+                                    )
+                            );
+                    return;
+                } catch (ca.vaskor.terry.fractalmusic.lib.OutOfMIDIRangeException exn) {
+                    throw new Error("Code error: Hardcoded MIDI value out of range!");
+                }
+            }
+            randomSeedField = new JTextField(settings.randomSeed, 10);
+            randomSeedEnable.setSelected(settings.isSeedEnabled);
+
+            lowPitchField.setSelectedItem(settings.lowPitch);
+            highPitchField.setSelectedItem(settings.highPitch);
+            longLengthCombo.setSelectedItem(settings.longLength);
+            shortLengthCombo.setSelectedItem(settings.shortLength);
+            scaleCombo.setSelectedItem(settings.scale);
+        }
 	
         public NoteRangeRestrictor getNoteRangeRestrictor() {
+            SharedPanelData dat = getData();
             return new NoteRangeRestrictor(
-                    (MIDIPitch) lowPitchField.getSelectedItem(),
-                    (MIDIPitch) highPitchField.getSelectedItem(),
-                    (Duration) shortLengthCombo.getSelectedItem(),
-                    (Duration) longLengthCombo.getSelectedItem(),
-                    (ScaleType) scaleCombo.getSelectedItem()
+                    dat.lowPitch,
+                    dat.highPitch,
+                    dat.shortLength,
+                    dat.longLength,
+                    dat.scale
                     );
         }
 	
@@ -122,4 +139,16 @@ public class SharedPanel extends RecursiveEnableJPanel {
                 return null;
             }
 	}
+        
+        /* package */ SharedPanelData getData() {
+            return new SharedPanelData(
+                    (MIDIPitch) lowPitchField.getSelectedItem(),
+                    (MIDIPitch) highPitchField.getSelectedItem(),
+                    (Duration) shortLengthCombo.getSelectedItem(),
+                    (Duration) longLengthCombo.getSelectedItem(),
+                    (ScaleType) scaleCombo.getSelectedItem(),
+                    randomSeedField.getText(),
+                    randomSeedEnable.isSelected()
+                    );
+        }
 }
