@@ -34,7 +34,7 @@ public abstract class BrownNoteGenerator implements NoteGenerator {
 
     protected abstract int calculateChange(
             int baseIndex, int maxNegChange,
-            int maxPosChange, int maxIndex
+            int maxPosChange, int maxIndexPlusOne
             );
 
     private int nextPitchIndex, nextLengthIndex;

@@ -24,13 +24,6 @@ public class AdditiveNoteGenerator extends DiceRollNoteGenerator {
 			resultVector.setElementAt( new Integer(replacementValue), indexToDecrement);
 		}
 
-		System.out.print("Returning Vector with values:");
-		for (int i = 0; i < resultVector.size(); i++) {
-			System.out.print(" " + 
-				( (Integer) resultVector.elementAt(i) ).intValue()
-			);
-		}
-		System.out.println();
 		return resultVector;
 	}
 

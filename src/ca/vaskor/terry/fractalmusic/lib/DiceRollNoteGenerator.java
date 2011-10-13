@@ -78,8 +78,6 @@ public abstract class DiceRollNoteGenerator implements NoteGenerator {
             MIDIPitch pitchReturn = nrr.getPitch(calculateNextPitch());
             Duration lengthReturn = nrr.getDuration(calculateNextLength());
 
-            System.out.println("Note: pitch " + pitchReturn +
-                    ", length " + lengthReturn);
             return new Note(pitchReturn, lengthReturn);
     }
 
