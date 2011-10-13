@@ -14,11 +14,16 @@ import ca.vaskor.terry.fractalmusic.lib.WhiteNoteGenerator;
  */
 public class WhiteMusicPanel extends MusicPanel {
     public WhiteMusicPanel(javax.swing.ButtonGroup radioGroup, boolean buttonSelected) {
-        super("White music", radioGroup, buttonSelected);
+        super(MusicType.WHITE, radioGroup, buttonSelected);
     }
     
     @Override
     public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, java.util.Random randGen) {
         return new WhiteNoteGenerator(nrr, randGen);
+    }
+    
+    @Override
+    public java.util.EnumMap<MusicType, java.util.List<Object>> getData() {
+        return putInHash();
     }
 }

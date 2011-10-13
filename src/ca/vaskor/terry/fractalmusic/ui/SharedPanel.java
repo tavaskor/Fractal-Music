@@ -25,7 +25,9 @@ import ca.vaskor.terry.fractalmusic.lib.ScaleType;
  * @author Terry Vaskor
  *
  */
-public class SharedPanel extends RecursiveEnableJPanel {
+public class SharedPanel
+extends RecursiveEnableJPanel
+implements DataRetriever<SharedPanelData> {
 	private static final long serialVersionUID = 6273677888021571673L;
 	
 	private static final List<Duration> durations =
@@ -140,7 +142,8 @@ public class SharedPanel extends RecursiveEnableJPanel {
             }
 	}
         
-        /* package */ SharedPanelData getData() {
+        @Override
+        public SharedPanelData getData() {
             return new SharedPanelData(
                     (MIDIPitch) lowPitchField.getSelectedItem(),
                     (MIDIPitch) highPitchField.getSelectedItem(),

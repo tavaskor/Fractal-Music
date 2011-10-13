@@ -18,15 +18,23 @@ import ca.vaskor.terry.fractalmusic.lib.AdditiveNoteGenerator;
  * @author tavaskor
  */
 public class PinkMusicPanel extends MusicPanel {
-    public PinkMusicPanel(javax.swing.ButtonGroup radioGroup, boolean buttonSelected) {
-        super("Pink music", radioGroup, buttonSelected);
+    public PinkMusicPanel(
+            javax.swing.ButtonGroup radioGroup,
+            java.util.List<Object> pinkOptions,
+            boolean buttonSelected) {
+        super(MusicType.PINK, radioGroup, buttonSelected);
         
         JPanel pinkMusicRest = new RecursiveEnableJPanel();
         this.add( pinkMusicRest, BorderLayout.CENTER );
         numPitchDice = new JComboBox(pinkPitchDiceOptions);
         numLengthDice = new JComboBox(pinkLengthDiceOptions);
-        numPitchDice.setSelectedIndex(5);
-        numLengthDice.setSelectedIndex(2);
+        if (pinkOptions == null) {
+            numPitchDice.setSelectedItem(6);
+            numLengthDice.setSelectedItem(3);
+        } else {
+            numPitchDice.setSelectedItem(pinkOptions.get(0));
+            numLengthDice.setSelectedItem(pinkOptions.get(1));
+        }
         pinkMusicRest.add( new JLabel("# pitch die:") );
         pinkMusicRest.add( numPitchDice );
         pinkMusicRest.add( new JLabel("# length die:") );
@@ -39,6 +47,11 @@ public class PinkMusicPanel extends MusicPanel {
         int pitchDice = (Integer) numPitchDice.getSelectedItem();
         int lengthDice = (Integer) numLengthDice.getSelectedItem();
         return new AdditiveNoteGenerator(nrr, pitchDice, lengthDice, randGen);
+    }
+    
+    @Override
+    public java.util.EnumMap<MusicType, java.util.List<Object>> getData() {
+        return putInHash(numPitchDice.getSelectedItem(), numLengthDice.getSelectedItem());
     }
     
     private JComboBox numPitchDice;

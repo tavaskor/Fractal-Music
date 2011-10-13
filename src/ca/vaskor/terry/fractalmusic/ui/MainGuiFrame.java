@@ -22,10 +22,10 @@ public class MainGuiFrame extends javax.swing.JFrame {
 
     /** Creates new form MainGuiFrame */
     public MainGuiFrame() {
-        this(null);
+        this(null, null);
     }
     
-    public MainGuiFrame(SharedPanelData dat) {
+    public MainGuiFrame(SharedPanelData sDat, GeneratorPanelData gDat) {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         numFrames.incrementAndGet();
 
@@ -46,7 +46,7 @@ public class MainGuiFrame extends javax.swing.JFrame {
         );
         
         
-        this.setContentPane(new MainPanel(dat));
+        this.setContentPane(new MainPanel(sDat, gDat));
 
         pack();
         addWindowListener(new WindowEventHandler());

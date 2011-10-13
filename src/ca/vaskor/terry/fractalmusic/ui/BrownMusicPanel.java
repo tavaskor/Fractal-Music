@@ -20,15 +20,24 @@ import ca.vaskor.terry.fractalmusic.lib.ReflectingBrownNoteGenerator;
  */
 public class BrownMusicPanel extends MusicPanel {
     
-    public BrownMusicPanel(javax.swing.ButtonGroup radioGroup, boolean buttonSelected) {
-        super("Brown music", radioGroup, buttonSelected);
+    public BrownMusicPanel(
+            javax.swing.ButtonGroup radioGroup,
+            java.util.List<Object> brownOptions,
+            boolean buttonSelected
+            ) {
+        super(MusicType.BROWN, radioGroup, buttonSelected);
         
         JPanel brownMusicRest = new RecursiveEnableJPanel();
         this.add( brownMusicRest, BorderLayout.CENTER );
         pitchSpread = new JComboBox(brownSpreadOptions);
         lengthSpread = new JComboBox(brownSpreadOptions);
-        pitchSpread.setSelectedIndex(0);
-        lengthSpread.setSelectedIndex(0);
+        if (brownOptions == null) {
+            pitchSpread.setSelectedItem(1);
+            lengthSpread.setSelectedItem(1);
+        } else {
+            pitchSpread.setSelectedItem(brownOptions.get(0));
+            lengthSpread.setSelectedItem(brownOptions.get(1));
+        }
         brownMusicRest.add( new JLabel("Max pitch change:") );
         brownMusicRest.add( pitchSpread );
         brownMusicRest.add( new JLabel("Max length step:") );
@@ -41,6 +50,12 @@ public class BrownMusicPanel extends MusicPanel {
         int lengthDiff = (Integer) lengthSpread.getSelectedItem();
         return new ReflectingBrownNoteGenerator(nrr, randGen, 
                     -pitchDiff, pitchDiff, -lengthDiff, lengthDiff);
+    }
+    
+    @Override
+    public java.util.EnumMap<MusicType, java.util.List<Object>> getData() {
+        return putInHash(pitchSpread.getSelectedItem(), 
+                lengthSpread.getSelectedItem());
     }
     
     private static final Integer[] brownSpreadOptions = {1, 2, 3};
