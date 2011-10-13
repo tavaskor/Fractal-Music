@@ -9,6 +9,7 @@ import java.util.List;
 import ca.vaskor.terry.fractalmusic.lib.NoteRangeRestrictor;
 import ca.vaskor.terry.fractalmusic.lib.Duration;
 import ca.vaskor.terry.fractalmusic.lib.MIDIPitch;
+import ca.vaskor.terry.fractalmusic.lib.PitchName;
 import ca.vaskor.terry.fractalmusic.lib.ScaleType;
 
 /**
@@ -27,10 +28,10 @@ import ca.vaskor.terry.fractalmusic.lib.ScaleType;
 public class SharedPanel extends RecursiveEnableJPanel {
 	private static final long serialVersionUID = 6273677888021571673L;
 
-	private JComboBox lowPitchField;
-	private JComboBox highPitchField;
-	private JComboBox longLengthCombo;
-	private JComboBox shortLengthCombo;
+	private PairedJComboBox lowPitchField;
+	private PairedJComboBox highPitchField;
+	private PairedJComboBox longLengthCombo;
+	private PairedJComboBox shortLengthCombo;
 	private JComboBox scaleCombo;
 	
         private JCheckBox randomSeedEnable;
@@ -57,20 +58,27 @@ public class SharedPanel extends RecursiveEnableJPanel {
 		this.add(otherOptions);
 		
 		// Now Set up private fields
-		lowPitchField = new JComboBox(pitches.toArray());
-		highPitchField = new JComboBox(pitches.toArray());
-		longLengthCombo = new JComboBox(durations.toArray());
-		shortLengthCombo = new JComboBox(durations.toArray());
+		lowPitchField = new PairedJComboBox(pitches.toArray());
+		highPitchField = new PairedJComboBox(pitches.toArray());
+		longLengthCombo = new PairedJComboBox(durations.toArray());
+		shortLengthCombo = new PairedJComboBox(durations.toArray());
                 scaleCombo = new JComboBox(ScaleType.values());
+                
+                lowPitchField.pairWithHigher(highPitchField);
+                shortLengthCombo.pairWithHigher(longLengthCombo);
                 
                 randomSeedEnable = new JCheckBox("Random seed: ");
 		randomSeedField = new JTextField("12345", 10);
                 randomSeedEnable.setSelected(false);
 
-		lowPitchField.setSelectedIndex(32);
-		highPitchField.setSelectedIndex(96);
-		longLengthCombo.setSelectedIndex(Duration.QUARTER.ordinal());
-		shortLengthCombo.setSelectedIndex(Duration.SIXTEENTH.ordinal());
+                try {
+                    lowPitchField.setSelectedItem(MIDIPitch.getMIDIPitch(PitchName.G_SHARP, 2));
+                    highPitchField.setSelectedItem(MIDIPitch.getMIDIPitch(PitchName.C, 8));
+                } catch (ca.vaskor.terry.fractalmusic.lib.OutOfMIDIRangeException exn) {
+                    throw new Error("Code error: Hardcoded MIDI value out of range!");
+                }
+		longLengthCombo.setSelectedItem(Duration.QUARTER);
+		shortLengthCombo.setSelectedItem(Duration.SIXTEENTH);
                 scaleCombo.setSelectedIndex(0);
 
 		
