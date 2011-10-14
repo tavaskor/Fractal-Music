@@ -11,6 +11,7 @@ import ca.vaskor.terry.fractalmusic.lib.Duration;
 import ca.vaskor.terry.fractalmusic.lib.MIDIPitch;
 import ca.vaskor.terry.fractalmusic.lib.PitchName;
 import ca.vaskor.terry.fractalmusic.lib.ScaleType;
+import ca.vaskor.terry.fractalmusic.lib.GeneralMIDIInstrument;
 
 /**
  * 
@@ -46,22 +47,27 @@ implements DataRetriever<SharedPanelData> {
                 new PairedJComboBox(durations.toArray());
 	private JComboBox scaleCombo = 
                 new JComboBox(ScaleType.values());
+        private JComboBox instrumentCombo =
+                new JComboBox(GeneralMIDIInstrument.values());
+        
 	
         private JCheckBox randomSeedEnable = new JCheckBox("Random seed: ");
 	private JTextField randomSeedField;
 	
 	public SharedPanel(SharedPanelData settings) {
 		// Add appropriate subsections to this Panel
-		this.setLayout( new GridLayout(4, 1) );
+		this.setLayout( new GridLayout(0, 1) );
 		
 		JPanel pitchOptions = new RecursiveEnableJPanel();
 		JPanel lengthOptions = new RecursiveEnableJPanel();	
                 JPanel scaleOptions = new RecursiveEnableJPanel();
+                JPanel instrumentOptions = new RecursiveEnableJPanel();
 		JPanel otherOptions = new RecursiveEnableJPanel();
 		
 		this.add(pitchOptions);
 		this.add(lengthOptions);
                 this.add(scaleOptions);
+                this.add(instrumentOptions);
 		this.add(otherOptions);
 		
 		// Now initialize values of the GUI fields
@@ -73,6 +79,10 @@ implements DataRetriever<SharedPanelData> {
                 scaleOptions.setLayout( new BoxLayout( scaleOptions, BoxLayout.X_AXIS ) );
 		scaleOptions.add( new JLabel("Scale: ") );
 		scaleOptions.add( scaleCombo );
+                
+                instrumentOptions.setLayout( new BoxLayout( instrumentOptions, BoxLayout.X_AXIS ) );
+		instrumentOptions.add( new JLabel("Instrument: ") );
+		instrumentOptions.add( instrumentCombo );
                 
 		otherOptions.setLayout( new BoxLayout( otherOptions, BoxLayout.X_AXIS ) );
 		otherOptions.add( randomSeedEnable );
@@ -103,6 +113,7 @@ implements DataRetriever<SharedPanelData> {
                                     MIDIPitch.getMIDIPitch(PitchName.C, 8),
                                     Duration.SIXTEENTH,
                                     Duration.QUARTER,
+                                    GeneralMIDIInstrument.ACOUSTIC,
                                     ScaleType.CHROMATIC,
                                     "12345",
                                     false
@@ -120,6 +131,7 @@ implements DataRetriever<SharedPanelData> {
             highPitchField.setSelectedItem(settings.highPitch);
             longLengthCombo.setSelectedItem(settings.longLength);
             shortLengthCombo.setSelectedItem(settings.shortLength);
+            instrumentCombo.setSelectedItem(settings.instrument);
             scaleCombo.setSelectedItem(settings.scale);
         }
 	
@@ -149,6 +161,7 @@ implements DataRetriever<SharedPanelData> {
                     (MIDIPitch) highPitchField.getSelectedItem(),
                     (Duration) shortLengthCombo.getSelectedItem(),
                     (Duration) longLengthCombo.getSelectedItem(),
+                    (GeneralMIDIInstrument) instrumentCombo.getSelectedItem(),
                     (ScaleType) scaleCombo.getSelectedItem(),
                     randomSeedField.getText(),
                     randomSeedEnable.isSelected()

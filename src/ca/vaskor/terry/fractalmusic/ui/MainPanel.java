@@ -137,7 +137,7 @@ public class MainPanel extends RecursiveEnableJPanel  {
             try {
                 // Create and play a new MIDI sequence based on the NoteGenerator
                 // created from the user's specifications
-                msc = new MIDISequenceCreator(ng);
+                msc = new MIDISequenceCreator(ng, sharedOpts.getData().instrument);
                 msc.playSequence();
 
                 // Modify the user interface so the user can no longer modify anything

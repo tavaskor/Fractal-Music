@@ -8,7 +8,7 @@ import java.util.LinkedList;
 //Create a monophonic MIDI sequence on channel 1
 
 public class MIDISequenceCreator implements Runnable {
-    public MIDISequenceCreator(NoteGenerator noteGen) 
+    public MIDISequenceCreator(NoteGenerator noteGen, GeneralMIDIInstrument instrument) 
             throws InvalidMidiDataException, MidiUnavailableException {
         gen = noteGen;
 		
@@ -18,6 +18,8 @@ public class MIDISequenceCreator implements Runnable {
         seq = new Sequence(Sequence.PPQ, TICKS_PER_QUARTER_NOTE, 1); 
         Track[] trackList = seq.getTracks();
         editTrack = trackList[0];
+        
+        midiInstrument = instrument;
     }
 	
 	
@@ -95,13 +97,28 @@ public class MIDISequenceCreator implements Runnable {
     private NoteGenerator gen;
     private Queue<MidiEvent> eventTrack = new LinkedList<MidiEvent>();
     private final Object lockProtector = new Object();
+    private GeneralMIDIInstrument midiInstrument;
 
 	
     private class NoteAdder implements Runnable {
         private int adderPosition = 1;
 
         public NoteAdder() {
-                addNotes();
+            // Set the instrument first.
+            ShortMessage prgChange = new ShortMessage();
+            try {
+                prgChange.setMessage(
+                        ShortMessage.PROGRAM_CHANGE, 
+                        1,
+                        midiInstrument.ordinal(),
+                        0
+                        );
+            } catch (InvalidMidiDataException e) { System.err.println("FAIL"); }
+            MidiEvent meep = new MidiEvent(prgChange, adderPosition);
+            editTrack.add(meep);
+            adderPosition++;
+            
+            addNotes();
         }
 
         // Add notes until we are 10*(length of whole note) ahead of the current location
