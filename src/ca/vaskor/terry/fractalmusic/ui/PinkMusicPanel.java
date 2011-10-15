@@ -26,8 +26,8 @@ public class PinkMusicPanel extends MusicPanel {
         
         JPanel pinkMusicRest = new RecursiveEnableJPanel();
         this.add( pinkMusicRest, BorderLayout.CENTER );
-        numPitchDice = new JComboBox(pinkPitchDiceOptions);
-        numLengthDice = new JComboBox(pinkLengthDiceOptions);
+        numPitchDice = new ArtificiallyEnlargedJComboBox(pinkPitchDiceOptions);
+        numLengthDice = new ArtificiallyEnlargedJComboBox(pinkLengthDiceOptions);
         if (pinkOptions == null) {
             numPitchDice.setSelectedItem(6);
             numLengthDice.setSelectedItem(3);

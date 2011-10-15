@@ -18,13 +18,14 @@ import ca.vaskor.terry.fractalmusic.lib.GeneralMIDIInstrument;
 public class SharedPanelData {
     public SharedPanelData(
             MIDIPitch low, MIDIPitch high, Duration shortD, Duration longD, 
-            GeneralMIDIInstrument instr,
+            GeneralMIDIInstrument instr, int vol,
             ScaleType scl, String seed, boolean seedEnabled) {
         lowPitch = low;
         highPitch = high;
         shortLength = shortD;
         longLength = longD;
         instrument = instr;
+        volume = vol;
         scale = scl;
         randomSeed = seed;
         isSeedEnabled = seedEnabled;
@@ -35,6 +36,7 @@ public class SharedPanelData {
     final Duration              shortLength;
     final Duration              longLength;
     final GeneralMIDIInstrument instrument;
+    final int                   volume;
     final ScaleType             scale;
     final String                randomSeed;
     final boolean               isSeedEnabled;

@@ -70,14 +70,15 @@ public class MainPanel extends RecursiveEnableJPanel  {
         
         
         // Make sure the components do not stretch vertically or horizontally
-        // by setting their maximum and preferred heights/widths to the
-        // same as their minimum heights/widths.
+        // by setting their maximum, preferred and minimum heights/widths to the
+        // same heights/widths.
         java.awt.Component[] comps = { ngr, sharedOpts };
         String[] attributes = { SpringLayout.HEIGHT, SpringLayout.WIDTH };
+        
         for (java.awt.Component component : comps) {
             for (String attribute: attributes) {
-                int minValue = layout.getConstraint(attribute, component).getMinimumValue();
-                Spring newSpring = Spring.constant(minValue, minValue, minValue);
+                int setValue = layout.getConstraint(attribute, component).getPreferredValue();
+                Spring newSpring = Spring.constant(setValue, setValue, setValue);
                 layout.getConstraints(component).setConstraint(attribute, newSpring);
             }
         }
@@ -134,10 +135,12 @@ public class MainPanel extends RecursiveEnableJPanel  {
                     randGen
                     );
 
+            SharedPanelData dat = sharedOpts.getData();
+            
             try {
                 // Create and play a new MIDI sequence based on the NoteGenerator
                 // created from the user's specifications
-                msc = new MIDISequenceCreator(ng, sharedOpts.getData().instrument);
+                msc = new MIDISequenceCreator(ng, dat.instrument, dat.volume);
                 msc.playSequence();
 
                 // Modify the user interface so the user can no longer modify anything
@@ -151,6 +154,13 @@ public class MainPanel extends RecursiveEnableJPanel  {
                 JOptionPane.showMessageDialog(disableMaster, "MIDI is not available:\n" + e.toString());
             }
         }
+    }
+    
+    /*package*/ MIDISequenceCreator getMIDISequenceCreator() {
+        if (currentlyPlayingMIDI) {
+            return msc;
+        }
+        return null;
     }
 
     private boolean currentlyPlayingMIDI = false;

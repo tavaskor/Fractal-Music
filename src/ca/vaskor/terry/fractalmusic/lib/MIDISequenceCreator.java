@@ -8,18 +8,20 @@ import java.util.LinkedList;
 //Create a monophonic MIDI sequence on channel 1
 
 public class MIDISequenceCreator implements Runnable {
-    public MIDISequenceCreator(NoteGenerator noteGen, GeneralMIDIInstrument instrument) 
+    public MIDISequenceCreator(NoteGenerator noteGen, GeneralMIDIInstrument instrument, int volume) 
             throws InvalidMidiDataException, MidiUnavailableException {
         gen = noteGen;
 		
         // Initialize variables used by both this class and the inner class's thread.
         seqer = javax.sound.midi.MidiSystem.getSequencer();
+        synth = MidiSystem.getSynthesizer();
         seqer.open();
         seq = new Sequence(Sequence.PPQ, TICKS_PER_QUARTER_NOTE, 1); 
         Track[] trackList = seq.getTracks();
         editTrack = trackList[0];
         
         midiInstrument = instrument;
+        vol = volume;
     }
 	
 	
@@ -91,6 +93,7 @@ public class MIDISequenceCreator implements Runnable {
 
     private boolean finished = false;
 
+    private Synthesizer synth;
     private Sequencer seqer;
     private Sequence seq;
     private Track editTrack;
@@ -98,14 +101,18 @@ public class MIDISequenceCreator implements Runnable {
     private Queue<MidiEvent> eventTrack = new LinkedList<MidiEvent>();
     private final Object lockProtector = new Object();
     private GeneralMIDIInstrument midiInstrument;
+    private int vol;
 
 	
     private class NoteAdder implements Runnable {
         private int adderPosition = 1;
+        
+        private static final int COARSE_VOLUME_CTRL = 7;
 
         public NoteAdder() {
-            // Set the instrument first.
+            // Set the instrument first as well as the volume
             ShortMessage prgChange = new ShortMessage();
+            ShortMessage volChange = new ShortMessage();
             try {
                 prgChange.setMessage(
                         ShortMessage.PROGRAM_CHANGE, 
@@ -113,10 +120,18 @@ public class MIDISequenceCreator implements Runnable {
                         midiInstrument.ordinal(),
                         0
                         );
+                volChange.setMessage(
+                        ShortMessage.CONTROL_CHANGE,
+                        1,
+                        COARSE_VOLUME_CTRL,
+                        vol
+                        );
             } catch (InvalidMidiDataException e) { System.err.println("FAIL"); }
             MidiEvent meep = new MidiEvent(prgChange, adderPosition);
             editTrack.add(meep);
-            adderPosition++;
+            meep = new MidiEvent(volChange, adderPosition + 1);
+            editTrack.add(meep);
+            adderPosition+=2;
             
             addNotes();
         }

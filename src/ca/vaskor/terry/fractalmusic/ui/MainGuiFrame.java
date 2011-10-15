@@ -45,8 +45,8 @@ public class MainGuiFrame extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
         
-        
-        this.setContentPane(new MainPanel(sDat, gDat));
+        heldPanel = new MainPanel(sDat, gDat);
+        this.setContentPane(heldPanel);
 
         pack();
         addWindowListener(new WindowEventHandler());
@@ -97,10 +97,20 @@ public class MainGuiFrame extends javax.swing.JFrame {
     private class WindowEventHandler extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e) {
+            // Stop MIDI if it's playing.
+            ca.vaskor.terry.fractalmusic.lib.MIDISequenceCreator msc = heldPanel.getMIDISequenceCreator();
+            if (msc != null) {
+                msc.haltExecution();
+            }
+            
+            // Decrement the number of open frames.
+            // If this hits zero, then quit.
             int currentNumFrames = numFrames.decrementAndGet();
             if (currentNumFrames == 0) {
                 System.exit(0);
             }
         }
     }
+    
+    private MainPanel heldPanel;
 }

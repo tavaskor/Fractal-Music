@@ -36,6 +36,9 @@ implements DataRetriever<SharedPanelData> {
                 
         private static final List<MIDIPitch> pitches= 
                 MIDIPitch.getRange(MIDIPitch.LOWEST_PITCH, MIDIPitch.HIGHEST_PITCH);
+        
+        private static final Integer VOLUME_MIN = 0;
+        private static final Integer VOLUME_MAX = 127;
 
 	private PairedJComboBox lowPitchField = 
                 new PairedJComboBox(pitches.toArray());
@@ -49,6 +52,8 @@ implements DataRetriever<SharedPanelData> {
                 new JComboBox(ScaleType.values());
         private JComboBox instrumentCombo =
                 new JComboBox(GeneralMIDIInstrument.values());
+        private JSlider volumeSlider =
+                new JSlider(VOLUME_MIN, VOLUME_MAX);
         
 	
         private JCheckBox randomSeedEnable = new JCheckBox("Random seed: ");
@@ -62,12 +67,14 @@ implements DataRetriever<SharedPanelData> {
 		JPanel lengthOptions = new RecursiveEnableJPanel();	
                 JPanel scaleOptions = new RecursiveEnableJPanel();
                 JPanel instrumentOptions = new RecursiveEnableJPanel();
+                JPanel volumeOptions = new RecursiveEnableJPanel();
 		JPanel otherOptions = new RecursiveEnableJPanel();
 		
 		this.add(pitchOptions);
 		this.add(lengthOptions);
                 this.add(scaleOptions);
                 this.add(instrumentOptions);
+                this.add(volumeOptions);
 		this.add(otherOptions);
 		
 		// Now initialize values of the GUI fields
@@ -83,6 +90,13 @@ implements DataRetriever<SharedPanelData> {
                 instrumentOptions.setLayout( new BoxLayout( instrumentOptions, BoxLayout.X_AXIS ) );
 		instrumentOptions.add( new JLabel("Instrument: ") );
 		instrumentOptions.add( instrumentCombo );
+                
+                volumeOptions.setLayout( new BoxLayout( volumeOptions, BoxLayout.X_AXIS ) );
+		volumeOptions.add( new JLabel("Volume: ") );
+		volumeOptions.add( volumeSlider );
+                volumeSlider.setMajorTickSpacing(16);
+                volumeSlider.setMinorTickSpacing(4);
+                volumeSlider.setPaintTicks(true);
                 
 		otherOptions.setLayout( new BoxLayout( otherOptions, BoxLayout.X_AXIS ) );
 		otherOptions.add( randomSeedEnable );
@@ -114,6 +128,7 @@ implements DataRetriever<SharedPanelData> {
                                     Duration.SIXTEENTH,
                                     Duration.QUARTER,
                                     GeneralMIDIInstrument.ACOUSTIC,
+                                    100,
                                     ScaleType.CHROMATIC,
                                     "12345",
                                     false
@@ -132,6 +147,7 @@ implements DataRetriever<SharedPanelData> {
             longLengthCombo.setSelectedItem(settings.longLength);
             shortLengthCombo.setSelectedItem(settings.shortLength);
             instrumentCombo.setSelectedItem(settings.instrument);
+            volumeSlider.setValue(settings.volume);
             scaleCombo.setSelectedItem(settings.scale);
         }
 	
@@ -162,6 +178,7 @@ implements DataRetriever<SharedPanelData> {
                     (Duration) shortLengthCombo.getSelectedItem(),
                     (Duration) longLengthCombo.getSelectedItem(),
                     (GeneralMIDIInstrument) instrumentCombo.getSelectedItem(),
+                    volumeSlider.getValue(),
                     (ScaleType) scaleCombo.getSelectedItem(),
                     randomSeedField.getText(),
                     randomSeedEnable.isSelected()

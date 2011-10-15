@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 
 import ca.vaskor.terry.fractalmusic.lib.NoteRangeRestrictor;
@@ -29,8 +30,8 @@ public class BrownMusicPanel extends MusicPanel {
         
         JPanel brownMusicRest = new RecursiveEnableJPanel();
         this.add( brownMusicRest, BorderLayout.CENTER );
-        pitchSpread = new JComboBox(brownSpreadOptions);
-        lengthSpread = new JComboBox(brownSpreadOptions);
+        pitchSpread = new ArtificiallyEnlargedJComboBox(brownSpreadOptions);
+        lengthSpread = new ArtificiallyEnlargedJComboBox(brownSpreadOptions);
         if (brownOptions == null) {
             pitchSpread.setSelectedItem(1);
             lengthSpread.setSelectedItem(1);
