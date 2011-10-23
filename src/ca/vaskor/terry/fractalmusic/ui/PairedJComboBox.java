@@ -6,13 +6,12 @@ package ca.vaskor.terry.fractalmusic.ui;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Arrays;
 
 /**
  *
  * @author tavaskor
  */
-public class PairedJComboBox extends javax.swing.JComboBox {    
+public class PairedJComboBox extends ArtificiallyEnlargedJComboBox {    
     public PairedJComboBox(Object[] items) {
         super(items);
         fullList = items;

@@ -11,7 +11,7 @@ import java.awt.BorderLayout;
 
 import ca.vaskor.terry.fractalmusic.lib.NoteRangeRestrictor;
 import ca.vaskor.terry.fractalmusic.lib.NoteGenerator;
-import ca.vaskor.terry.fractalmusic.lib.AdditiveNoteGenerator;
+import ca.vaskor.terry.fractalmusic.lib.PinkNoteGenerator;
 
 /**
  *
@@ -46,7 +46,7 @@ public class PinkMusicPanel extends MusicPanel {
     public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, java.util.Random randGen) {
         int pitchDice = (Integer) numPitchDice.getSelectedItem();
         int lengthDice = (Integer) numLengthDice.getSelectedItem();
-        return new AdditiveNoteGenerator(nrr, pitchDice, lengthDice, randGen);
+        return new PinkNoteGenerator(nrr, pitchDice, lengthDice, randGen);
     }
     
     @Override
