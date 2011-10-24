@@ -17,8 +17,8 @@ public class PinkNoteGenerator implements NoteGenerator {
             Random randGen
             ) {
         restrictor = nrr;
-        pitchDice = new DiceData(nrr.getNumPitches() - 1, numberOfPitchDice, randGen);
-        durationDice = new DiceData(nrr.getNumDurations() - 1, numberOfDurationDice, randGen);
+        pitchDice = new BinaryRollCountingDiceAggregator(nrr.getNumPitches() - 1, numberOfPitchDice, randGen);
+        durationDice = new BinaryRollCountingDiceAggregator(nrr.getNumDurations() - 1, numberOfDurationDice, randGen);
     }
     
     @Override
@@ -34,6 +34,6 @@ public class PinkNoteGenerator implements NoteGenerator {
     
     private final NoteRangeRestrictor restrictor;
     
-    private final DiceData pitchDice;
-    private final DiceData durationDice;
+    private final AbstractDice pitchDice;
+    private final AbstractDice durationDice;
 }
