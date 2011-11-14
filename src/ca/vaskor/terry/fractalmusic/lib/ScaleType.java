@@ -9,7 +9,10 @@ import java.util.ArrayList;
 
 /**
  *
- * @author tavaskor
+ * An enum specifying a variety of different scales that can be used by
+ * a given NoteRangeRestrictor to select pitches.
+ * 
+ * @author Terry Vaskor
  */
 public enum ScaleType {
     CHROMATIC("Chromatic", 1,1,1,1,1,1,1,1,1,1,1,1), 
@@ -28,6 +31,14 @@ public enum ScaleType {
     LIMITED_TRANSPORTATION_6("Mode of Limited Transposition #6", 2,2,1,1,2,2,1,1),
     LIMITED_TRANSPORTATION_7("Mode of Limited Transposition #7", 1,1,1,2,1,1,1,1,2,1);
     
+    /**
+     * 
+     * @param name                         A more conveniently human-readable representation for this enum.
+     * @param semitonesBetweenScaleDegrees A list of the number of semitones between successive scale notes.
+     *                                     The total must be a multiple of 12.
+     * @throws Error If the compile-time semitones between scale degrees do not add up to a multiple of twelve,
+     *               this scale would be invalid; the ScaleType source code is incorrect and needs to be modified.
+     */
     ScaleType(String name, int ... semitonesBetweenScaleDegrees) {
         scaleName = name;
         
@@ -47,14 +58,24 @@ public enum ScaleType {
         }
     }
     
+    /**
+     * 
+     * @return A conveniently human-readable representation of this enum value.
+     */
     @Override
     public String toString() {
         return scaleName;
     }
     
+    /**
+     * 
+     * @return The number of semitones between each successive pitch in the scale.
+     *         The total must be a multiple of 12.
+     */
     public List<? extends Integer> getScaleDegrees() {
         return semitoneSkips;
     }
+    
     private ArrayList<Integer> semitoneSkips;
     
     private String scaleName;

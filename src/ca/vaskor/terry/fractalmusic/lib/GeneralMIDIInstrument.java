@@ -139,7 +139,15 @@ public enum GeneralMIDIInstrument {
     GUNSHOT("Gunshot");
     
     GeneralMIDIInstrument(String name) { nm = name; }
+    
+    /**
+     * 
+     * @return A representation of the instrument consisting of its number
+     *   according to the MIDI specification, a space, and its human-readable
+     *   name.
+     */
     @Override
     public String toString() { return ordinal() + " " + nm; }
+    
     private String nm;
 }

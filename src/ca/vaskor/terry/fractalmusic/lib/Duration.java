@@ -25,6 +25,14 @@ public enum Duration {
         return denom;
     }
     
+    /**
+     * Converts a numeric denominator into a Duration.
+     * 
+     * For example, given a denominator of 4, this function will return QUARTER.
+     * 
+     * @param denominator The denominator of the fraction representing a note duration
+     * @return The Duration representation of the note with that denominator.
+     */
     public static Duration durationFromDenominator(int denominator) {
         switch(denominator) {
             case 1: return WHOLE;
@@ -38,6 +46,11 @@ public enum Duration {
         }
     }
     
+    /**
+     * 
+     * @return A representation of the note as a fraction followed by " note",
+     *         or "Whole note" in the special WHOLE case.
+     */
     public String toString() {
         String firstPart; 
         if (this == WHOLE) {
@@ -48,6 +61,13 @@ public enum Duration {
         return firstPart + " note";
     }
     
+    /**
+     * Get a list of contiguous durations between two particular values.
+     * 
+     * @param end1 The shortest duration desired.
+     * @param end2 The longest duration desired.
+     * @return A list of all durations between end1 and end2, inclusive.
+     */
     public static List<Duration> getRange(Duration end1, Duration end2) {
         if (end2.compareTo(end1) < 0) { return getRange(end2, end1); }
         

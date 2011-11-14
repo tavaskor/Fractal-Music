@@ -6,8 +6,9 @@ package ca.vaskor.terry.fractalmusic.lib;
 
 
 /**
- *
- * @author tavaskor
+ * A representation of the pitches within the chromatic scale.
+ * 
+ * @author Terry Vaskor
  */
 
 public enum PitchName {
@@ -17,6 +18,13 @@ public enum PitchName {
     public final static String SHARP = "\u266F";
     public final static String FLAT = "\u266D";
     
+    /**
+     * Provides a convenient and short human-readable representation of
+     * the pitch in question, using the Unicode characters for sharp and
+     * flat where required.
+     * 
+     * @return The string representation of the pitch.
+     */
     @Override
     public String toString() {
         if (this == PitchName.C_SHARP) return "C" + SHARP;

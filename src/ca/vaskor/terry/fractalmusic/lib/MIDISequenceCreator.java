@@ -5,9 +5,21 @@ import javax.sound.midi.*;
 import java.util.Queue;
 import java.util.LinkedList;
 
-//Create a monophonic MIDI sequence on channel 1
 
+/**
+ * Creates a monophonic MIDI sequence on channel 1
+ * 
+ * @author Terry Vaskor
+ */
 public class MIDISequenceCreator implements Runnable {
+    /**
+     * 
+     * @param noteGen    Used to get every {@link Note} to be played.
+     * @param instrument The instrument to use in this MIDI sequence.
+     * @param volume     The volume setting for all generated notes.
+     * @throws InvalidMidiDataException
+     * @throws MidiUnavailableException 
+     */
     public MIDISequenceCreator(NoteGenerator noteGen, GeneralMIDIInstrument instrument, int volume) 
             throws InvalidMidiDataException, MidiUnavailableException {
         gen = noteGen;
@@ -23,13 +35,22 @@ public class MIDISequenceCreator implements Runnable {
         midiInstrument = instrument;
         vol = volume;
     }
-	
-	
+    
+    
+    /**
+     * Stops playing this sequence of MIDI data.
+     */
     public void haltExecution() {
         finished = true;
         seqer.stop();
     }
-	
+    
+    /**
+     * Begins playing the sequence of MIDI data.
+     * 
+     * This will continue until the thread is explicitly stopped by
+     * a call to {@link #haltExecution}.
+     */
     @Override
     public void run() {
         // Start the NoteAdder to populate the MIDI sequence.
@@ -50,6 +71,10 @@ public class MIDISequenceCreator implements Runnable {
         } catch (Exception e) {}
     }
 
+    /**
+     * A wrapper for {@link #run} which creates a new {@link java.lang.Thread}
+     * to do the playing.
+     */
     public void playSequence() {
         Thread t = new Thread(this);
         t.start();

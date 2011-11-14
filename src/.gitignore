@@ -1,0 +1,6 @@
+# Generated javadoc #
+#####################
+*.html
+inherit.gif
+stylesheet.css
+package-list

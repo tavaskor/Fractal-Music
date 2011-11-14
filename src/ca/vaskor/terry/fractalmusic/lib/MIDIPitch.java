@@ -11,20 +11,31 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- *
- * @author tavaskor
+ * A container representing a valid pitch according to the MIDI specification.
+ * 
+ * The pitch can be indexed either by the raw MIDI number, or by a combination
+ * of {@link PitchName} and octave offset.
+ * 
+ * @author Terry Vaskor
  */
 public class MIDIPitch implements Comparable<MIDIPitch> {
-    
+    /**
+     * Construct a new MIDIPitch using a raw MIDI number.
+     * 
+     * @param midiNumber The number of the MIDI pitch according to the MIDI specification.
+     */
     private MIDIPitch(int midiNumber) {
         midiCode = midiNumber;
     }
     
     /**
+     * Obtain a MIDIPitch given the name of the pitch and an octave offset.
      * 
-     * @param name
-     * @param octave
-     * @throws OutOfMIDIRangeException
+     * @param name   The name of the pitch
+     * @param octave The octave in which the pitch will sound
+     * @exception OutOfMIDIRangeException if the combination of pitch name
+     *     and octave would result in an invalid pitch according to the
+     *     MIDI specification
      */
     public static MIDIPitch getMIDIPitch(PitchName name, int octave) throws OutOfMIDIRangeException {
         try {
@@ -37,17 +48,16 @@ public class MIDIPitch implements Comparable<MIDIPitch> {
     }
     
     /**
+     * Obtain a MIDIPitch given a raw MIDI number.
      * 
-     * @param midiNumber
-     * @throws OutOfMIDIRangeException
+     * @param midiCode The number of the pitch according to the MIDI specification.
+     * @exception OutOfMIDIRangeException if the pitch number is not in the range
+     *     allowed by the MIDI specification.
      */
     public static MIDIPitch getMIDIPitch(int midiCode) throws OutOfMIDIRangeException {
         
         if ((midiCode < LOWEST_VALID_MIDI_CODE) || 
                 (midiCode > HIGHEST_VALID_MIDI_CODE)) {
-            // TODO
-            // Sometimes passing "this" inside a constructor triggers nullptr exceptions.
-            // Fix OutOfMIDIRangeException to take raw data.
             throw new OutOfMIDIRangeException(midiCode);
         }
         
@@ -59,14 +69,24 @@ public class MIDIPitch implements Comparable<MIDIPitch> {
     
     /**
      * 
-     * @return
+     * @return The raw MIDI number for this pitch.
      */
     public int getMIDICode() {
         return midiCode;
     }
+    
+    /**
+     * 
+     * @return The pitch name, stripped of any octave context.
+     */
     public PitchName getScaleNote() {
         return midiOffsetToName.get(midiCode % NOTES_IN_OCTAVE);
     }
+    
+    /**
+     * 
+     * @return The octave within which this pitch lies.
+     */
     public int getOctave() {
         return midiCode / NOTES_IN_OCTAVE;
     }
@@ -74,18 +94,26 @@ public class MIDIPitch implements Comparable<MIDIPitch> {
     
     /**
      * 
-     * @return
+     * @return A string representation consisting of the pitch name 
+     *     concatenated with the octave number.
      */
     @Override
     public String toString() {
         return getScaleNote().toString() + getOctave();
     }
     
+    
     @Override
     public int compareTo(MIDIPitch other) {
         return (new Integer(this.getMIDICode())).compareTo(other.getMIDICode());
     }
     
+    /**
+     * 
+     * @param end1 The pitch at the bottom end of the desired range.
+     * @param end2 The pitch at the top end of the desired range.
+     * @return A list of all valid MIDIPitches between end1 and end2, inclusive.
+     */
     public static List<MIDIPitch> getRange(MIDIPitch end1, MIDIPitch end2) {
         if (end2.compareTo(end1) < 0) { return getRange(end2, end1); }
         

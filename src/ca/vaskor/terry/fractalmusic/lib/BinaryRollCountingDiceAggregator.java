@@ -7,16 +7,31 @@ package ca.vaskor.terry.fractalmusic.lib;
 import java.util.List;
 
 /**
- *
- * @author tavaskor
+ * This "die" actually represents a collection of die.  The amount read from it
+ * is the sum of the total rolled on each individual die.
+ * 
+ * On each roll, not all of the contained dice are rolled.  The ones selected
+ * for rolling are determined by the algorithm in {@link DiceDataUtil.getFlippedBits}.
+ * 
+ * @author Terry Vaskor
  */
 class BinaryRollCountingDiceAggregator implements AbstractDice {
+    
+    /**
+     * 
+     * @param rangeSize    The total range of values that should be rollable.
+     * @param numberOfDice The number of dice across which the range should be divided.
+     * @param gen          The random number generator to provide to all contained dice.
+     */
     BinaryRollCountingDiceAggregator(int rangeSize, int numberOfDice, java.util.Random gen) {
         diceList = DiceDataUtil.getDice(rangeSize, numberOfDice, gen);
         maxRollCounter = 1 << numberOfDice;
         maxRollableValue = rangeSize;
     }
 
+    /**
+     * Roll a subset of the contained dice.
+     */
     @Override
     public void roll() {
         int oldRollCounter = currentRollCounter;
@@ -32,6 +47,9 @@ class BinaryRollCountingDiceAggregator implements AbstractDice {
         }
     }
 
+    /**
+     * @return The sum of the values of all contaioned dice.
+     */
     @Override
     public int get() {
         int sum = 0;
@@ -41,6 +59,10 @@ class BinaryRollCountingDiceAggregator implements AbstractDice {
         return sum;
     }
     
+    /**
+     * 
+     * @return The sum of the maximum rollable values of all of the contained dice.
+     */
     @Override
     public int maximumRollableValue() {
         return maxRollableValue;

@@ -12,12 +12,19 @@ import java.util.ArrayList;
  * complex enough that they warrant special unit testing, and so are 
  * listed here instead.
  * 
- * @author tavaskor
+ * @author Terry Vaskor
  */
 class DiceDataUtil {
-    // Return a list of Dice, representing the number of sides generated
-    // dice should have given a maximum generated value and number of dice to
-    // use.
+    /**
+     * Get a list of dice that can be used to calculate values for a given music parameter.
+     * 
+     * @param rangeSize    The total size of the range of values that can be generated
+     * @param numberOfDice The number of die to partition the range into
+     * @param gen          Random number generator to pass to each die
+     * @return A list of Dice, representing the number of sides generated
+     * dice should have given a maximum generated value and number of dice to
+     * use.
+     */
     static java.util.List<? extends AbstractDice> getDice(int rangeSize, int numberOfDice, java.util.Random gen) {
         ArrayList<NSidedDie> diceList = new ArrayList<NSidedDie>(numberOfDice);
         
@@ -37,8 +44,16 @@ class DiceDataUtil {
         return diceList;
     }
     
-    // Return a list of all of the bits that have flipped, starting with 
-    // index 0 as the "ones" position, index 1 as "twos", index 2 as "fours", etc.
+    /**
+     * Given two integers, determine which bits have flipped, counting from the
+     * right-most bit as bit number 0.
+     * 
+     * @param val1 One of the values to compare to isolate which bits are different.
+     * @param val2 The other value to compare to isolate which bits are different.
+     * @return A {@link java.util.Collection} of all of the bits that have flipped, 
+     *         starting with index 0 as the "ones" position, index 1 as "twos", 
+     *         index 2 as "fours", etc.
+     */
     static java.util.Collection<Integer> getFlippedBits(int val1, int val2) {
         final int MAX_BITS = (int)(Math.log(Integer.MAX_VALUE) / Math.log(2));
 
