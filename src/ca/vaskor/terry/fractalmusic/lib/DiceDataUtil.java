@@ -5,6 +5,7 @@
 package ca.vaskor.terry.fractalmusic.lib;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * This class contains package-specific static functions that are used by
@@ -60,7 +61,7 @@ class DiceDataUtil {
         // XOR the values; the positions that are '1' are what's changed.
         int flipTrack = val1 ^ val2;
 
-        ArrayList<Integer> retVal = new ArrayList<Integer>();
+        HashSet<Integer> retVal = new HashSet<Integer>();
         for (int i = 0; i < MAX_BITS; i++) {
             int bitCheckMask = 1 << i;
             if ((flipTrack & bitCheckMask) != 0) {

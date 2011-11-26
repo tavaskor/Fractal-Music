@@ -12,7 +12,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.Collection;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
@@ -72,11 +72,11 @@ public class DiceDataUtilTest {
      * Test of getFlippedBits method, of class DiceDataUtil.
      */
     @Test
-    public void testGetFlippedBits() {
-        System.out.println("getFlippedBits");
+    public void testGetFlippedBitsCount() {
+        System.out.println("getFlippedBits: count");
         
         Collection<Integer> sameTest = DiceDataUtil.getFlippedBits(5, 5);
-        Collection<Integer> expResult = new ArrayList<Integer>();
+        Collection<Integer> expResult = new HashSet<Integer>();
         assertEquals("Two equal numbers should have no bits different", expResult, sameTest);
         
         Collection<Integer> oneOff = DiceDataUtil.getFlippedBits(0, 1);
@@ -86,5 +86,24 @@ public class DiceDataUtilTest {
         Collection<Integer> twoOff = DiceDataUtil.getFlippedBits(11, 14);
         expResult.add(2);
         assertEquals("11 and 14 should differ in two bits", expResult, twoOff);
+    }
+
+    /**
+     * Test of getFlippedBits method, of class DiceDataUtil.
+     */
+    @Test
+    public void testGetFlippedBitsPosition() {
+        System.out.println("getFlippedBits: position");
+        
+        Collection<Integer> testResult = DiceDataUtil.getFlippedBits(
+                Integer.parseInt("1001011010011111", 2),
+                Integer.parseInt("1000111010110110", 2));
+        Collection<Integer> expResult = new HashSet<Integer>();
+        expResult.add(0);
+        expResult.add(3);
+        expResult.add(5);
+        expResult.add(11);
+        expResult.add(12);
+        assertEquals("Verifying precise list of changed indices", expResult, testResult);
     }
 }
