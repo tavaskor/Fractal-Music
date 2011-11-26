@@ -10,11 +10,13 @@ import ca.vaskor.terry.fractalmusic.lib.ScaleType;
 import ca.vaskor.terry.fractalmusic.lib.GeneralMIDIInstrument;
 
 /**
- *
- * @author tavaskor
+ * A storage structure for selections in the GUI that apply to all types of music.
+ * 
+ * All fields are package scope as they are meant to be used internally in
+ * the ui package only.
+ * 
+ * @author Terry Vaskor
  */
-
-// Everything is package scope as it is meant for internal use only.
 public class SharedPanelData {
     public SharedPanelData(
             MIDIPitch low, MIDIPitch high, Duration shortD, Duration longD, 

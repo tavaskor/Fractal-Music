@@ -13,6 +13,12 @@ import ca.vaskor.terry.fractalmusic.lib.WhiteNoteGenerator;
  * @author tavaskor
  */
 public class WhiteMusicPanel extends MusicPanel {
+    
+    /**
+     * 
+     * @param radioGroup     The radio button group to which this panel belongs.
+     * @param buttonSelected True if this should be the selected panel.
+     */
     public WhiteMusicPanel(javax.swing.ButtonGroup radioGroup, boolean buttonSelected) {
         super(MusicType.WHITE, radioGroup, buttonSelected);
     }

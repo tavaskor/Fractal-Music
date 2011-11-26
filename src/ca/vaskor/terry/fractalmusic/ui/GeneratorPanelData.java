@@ -8,7 +8,11 @@ import java.util.EnumMap;
 import java.util.List;
 
 /**
- *
+ * A storage structure for data that was selected for each type of music to be generated.
+ * 
+ * All fields are package scope as they are meant to be used internally in
+ * the ui package only.
+ * 
  * @author tavaskor
  */
 public class GeneratorPanelData {

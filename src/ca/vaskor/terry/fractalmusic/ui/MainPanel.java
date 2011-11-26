@@ -6,11 +6,30 @@ import java.awt.BorderLayout;
 import ca.vaskor.terry.fractalmusic.lib.NoteGenerator;
 import ca.vaskor.terry.fractalmusic.lib.MIDISequenceCreator;
 
+/**
+ * This is the main panel for displaying the GUI.
+ * 
+ * It contains the {@link RadioGeneratorPanel}
+ * that allows selection of the type of music to generate
+ * and appropriate parameters for that particular type of music, the {@link SharedPanel}
+ * with options that apply to all types of music, and buttons to create a new music
+ * generating window and to start playing music.
+ * 
+ * @author Terry Vaskor
+ */
 public class MainPanel extends RecursiveEnableJPanel  {
     
     private static final long serialVersionUID = 7274657133880441695L;
     private static final int PANEL_PADDING = 5;
     
+    /**
+     * Create a new MainPanel, optionally with data to clone from another
+     * {@link MainPanel}.
+     * 
+     * @param sDat Data to copy from another {@link SharedPanel}; null if no data supplied
+     * @param gDat Data to copy from another {@link GeneratorPanel}; null if no data supplied
+     * 
+     */
     public MainPanel(SharedPanelData sDat, GeneratorPanelData gDat) {
         super();
         sharedOpts = new SharedPanel(sDat);

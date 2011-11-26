@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 
 import java.util.List;
 
-
 import ca.vaskor.terry.fractalmusic.lib.NoteRangeRestrictor;
 import ca.vaskor.terry.fractalmusic.lib.Duration;
 import ca.vaskor.terry.fractalmusic.lib.MIDIPitch;
@@ -14,17 +13,10 @@ import ca.vaskor.terry.fractalmusic.lib.ScaleType;
 import ca.vaskor.terry.fractalmusic.lib.GeneralMIDIInstrument;
 
 /**
+ * The panel specifying parameters that will apply to any note generator, such
+ * as the scale to use and the overall volume.
  * 
- */
-
-// TODO:
-// Modify the combo boxes so the lowest value for highPitch is lowPitch and the
-// highest value for lowPitch is highPitch.
-// Treat the length fields in a similar fashion.
-
-/**
  * @author Terry Vaskor
- *
  */
 public class SharedPanel
 extends RecursiveEnableJPanel
@@ -59,6 +51,11 @@ implements DataRetriever<SharedPanelData> {
         private JCheckBox randomSeedEnable = new JCheckBox("Random seed: ");
 	private JTextField randomSeedField;
 	
+        /**
+         * 
+         * @param settings The options to have selected on this panel.  Can be null
+         * if the defaults are to be used.
+         */
 	public SharedPanel(SharedPanelData settings) {
 		// Add appropriate subsections to this Panel
 		this.setLayout( new GridLayout(0, 1) );
@@ -151,6 +148,11 @@ implements DataRetriever<SharedPanelData> {
             scaleCombo.setSelectedItem(settings.scale);
         }
 	
+        /**
+         * 
+         * @return A {@link NoteRangeRestrictor} based on the selected options
+         * for pitch, duration, scale.
+         */
         public NoteRangeRestrictor getNoteRangeRestrictor() {
             SharedPanelData dat = getData();
             return new NoteRangeRestrictor(
@@ -162,6 +164,11 @@ implements DataRetriever<SharedPanelData> {
                     );
         }
 	
+        /**
+         * 
+         * @return The random seed specified by the user; null if no seed is specified.
+         * @throws NumberFormatException If a seed is specified but is not a valid long integer.
+         */
 	public Long getRandomSeed() throws NumberFormatException {
             if (randomSeedEnable.isSelected()) {
                 return new Long(randomSeedField.getText());

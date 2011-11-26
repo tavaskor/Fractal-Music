@@ -5,8 +5,11 @@
 package ca.vaskor.terry.fractalmusic.ui;
 
 /**
+ * An enum for the types of supported music.
+ * This is used primarily to facilitate creation of a new music panel with
+ * a set of settings copied from another music panel.
  *
- * @author tavaskor
+ * @author Terry Vaskor
  */
 public enum MusicType {
     WHITE("White"), BROWN("Brown"), PINK("Pink");

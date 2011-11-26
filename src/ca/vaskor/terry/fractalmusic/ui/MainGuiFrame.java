@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * MainGuiFrame.java
  *
  * Created on Sep 13, 2011, 12:55:55 PM
@@ -15,16 +10,25 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- *
- * @author tavaskor
+ * The main frame containing the entire user interface.
+ * 
+ * @author Terry Vaskor
  */
 public class MainGuiFrame extends javax.swing.JFrame {
 
-    /** Creates new form MainGuiFrame */
+    /**
+     * Creates a new frame with default selections on all subpanels.
+     */
     public MainGuiFrame() {
         this(null, null);
     }
     
+    /**
+     * Creates a new frame with specific selections on all subpanels.
+     * 
+     * @param sDat Selections that apply to any generated music.
+     * @param gDat Selections that apply only to particular types of generated music.
+     */
     public MainGuiFrame(SharedPanelData sDat, GeneratorPanelData gDat) {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         numFrames.incrementAndGet();
@@ -53,6 +57,10 @@ public class MainGuiFrame extends javax.swing.JFrame {
     }
 
     /**
+     * Create and display the GUI frame.
+     * 
+     * This is expected to be the main entry point for executed code.
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {

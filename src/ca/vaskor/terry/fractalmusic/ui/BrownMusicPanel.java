@@ -1,14 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.vaskor.terry.fractalmusic.ui;
 
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 
 import ca.vaskor.terry.fractalmusic.lib.NoteRangeRestrictor;
@@ -16,11 +11,18 @@ import ca.vaskor.terry.fractalmusic.lib.NoteGenerator;
 import ca.vaskor.terry.fractalmusic.lib.ReflectingBrownNoteGenerator;
 
 /**
- *
- * @author tavaskor
+ * A GUI panel to collect information for a {@link ca.vaskor.terry.fractalmusic.lib.BrownNoteGenerator}.
+ * 
+ * @author Terry Vaskor
  */
 public class BrownMusicPanel extends MusicPanel {
     
+    /**
+     * 
+     * @param radioGroup     The radio button group to which this panel belongs.
+     * @param brownOptions   The options to be selected in this panel.  If null, the defaults will be used.
+     * @param buttonSelected True if this should be the selected panel.
+     */
     public BrownMusicPanel(
             javax.swing.ButtonGroup radioGroup,
             java.util.List<Object> brownOptions,
@@ -45,6 +47,13 @@ public class BrownMusicPanel extends MusicPanel {
         brownMusicRest.add( lengthSpread );
     }
     
+    /**
+     * 
+     * @param nrr     A restrictor to apply to the returned {@link ca.vaskor.terry.fractalmusic.lib.NoteGenerator}.
+     * @param randGen The random number generator to use to generate notes.
+     * @return A {@link ca.vaskor.terry.fractalmusic.lib.BrownNoteGenerator}
+     * based on the options selected in this panel.
+     */
     @Override
     public NoteGenerator getNoteGenerator(NoteRangeRestrictor nrr, java.util.Random randGen) {
         int pitchDiff = (Integer) pitchSpread.getSelectedItem();
@@ -53,6 +62,10 @@ public class BrownMusicPanel extends MusicPanel {
                     -pitchDiff, pitchDiff, -lengthDiff, lengthDiff);
     }
     
+    /**
+     * 
+     * @return A list of the selections for the pitch and duration spreads on this panel.
+     */
     @Override
     public java.util.EnumMap<MusicType, java.util.List<Object>> getData() {
         return putInHash(pitchSpread.getSelectedItem(), 

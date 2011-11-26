@@ -5,12 +5,20 @@
 package ca.vaskor.terry.fractalmusic.ui;
 
 /**
- *
- * @author tavaskor
+ * A specialized button whose action is to fork a new {@link MainGuiFrame},
+ * retaining all of the selections of the source frame.
+ * 
+ * @author Terry Vaskor
  */
 public class ForkWindowButton extends javax.swing.JButton {
     private static final int X_DISPLACEMENT = 15;
     
+    /**
+     * 
+     * @param relativeTo       A GUI object relative to which the new frame will be created.
+     * @param panelToMonitor   Panel from which to retrieve data about general selected options.
+     * @param musicTypeMonitor Another panel from which to retrieve data about selections for particular types of music generation.
+     */
     public ForkWindowButton(
             final javax.swing.JComponent relativeTo,
             final DataRetriever<SharedPanelData> panelToMonitor,

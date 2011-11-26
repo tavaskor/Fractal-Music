@@ -8,10 +8,26 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 /**
+ * This class pairs two {@link javax.swing.JComboBox}es together that store
+ * the same ordered list of {@link java.lang.Object}s with one combo box being
+ * the "lower" selected value and the other being the "higher" selected value,
+ * and modify themselves to ensure that it is impossible to select a value in
+ * "higher" lower than the value in "lower" and vice versa.
+ * 
+ * As an example, consider the case where each list stores the numbers 1, 2, ... 10.
+ * If 3 is selected in the "lower" box, then the "higher" box will only display
+ * the options 3 through 10.  Similarly, if 4 is selected in the "higher" box,
+ * then the "lower" box will only display the options 1 through 4.
  *
- * @author tavaskor
+ * @author Terry Vaskor
  */
 public class PairedJComboBox extends ArtificiallyEnlargedJComboBox {    
+    
+    /**
+     * Create a PairedJComboBox.
+     * 
+     * @param items The contents to list
+     */
     public PairedJComboBox(Object[] items) {
         super(items);
         fullList = items;
@@ -30,6 +46,11 @@ public class PairedJComboBox extends ArtificiallyEnlargedJComboBox {
         });
     }
     
+    /**
+     * Pair this with another {@link PairedJComboBox}.
+     * 
+     * @param higherPartner The "higher" combo box (the caller is the "lower" one)
+     */
     public void pairWithHigher(PairedJComboBox higherPartner) {
         isHigher = false;
         higherPartner.isHigher = true;

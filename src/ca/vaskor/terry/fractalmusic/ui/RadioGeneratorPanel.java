@@ -12,8 +12,12 @@ import ca.vaskor.terry.fractalmusic.lib.NoteRangeRestrictor;
 import ca.vaskor.terry.fractalmusic.lib.NoteGenerator;
 
 /**
- * @author Terry
- *
+ * Contains a list of music generator options, selectable by radio buttons.
+ * 
+ * The embedded panels are the {@link WhiteMusicPanel}, {@link BrownMusicPanel},
+ * and {@link PinkMusicPanel}.
+ * 
+ * @author Terry Vaskor
  */
 public class RadioGeneratorPanel extends GeneratorPanel<GeneratorPanelData> {
 
@@ -21,6 +25,12 @@ public class RadioGeneratorPanel extends GeneratorPanel<GeneratorPanelData> {
 	
         private ArrayList<MusicPanel> musicPanels = new ArrayList<MusicPanel>();
 	
+        /**
+         * 
+         * @param dat The options to have selected on this panel.  Can be null
+         * if the defaults are to be used.
+         * 
+         */
 	public RadioGeneratorPanel(GeneratorPanelData dat) {
             MusicType selectedPanel = MusicType.PINK;
             List<Object> brownOptions = null;
